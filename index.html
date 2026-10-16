@@ -54,6 +54,7 @@
       <nav class="nav" aria-label="Seções" data-en-aria-label="Sections">
         <a href="#sobre"><span lang="pt-BR">Sobre</span><span lang="en">About</span></a>
         <a href="#experiencia"><span lang="pt-BR">Experiência</span><span lang="en">Experience</span></a>
+        <a href="#projetos"><span lang="pt-BR">Projetos</span><span lang="en">Projects</span></a>
       </nav>
       <div class="lang" role="group" aria-label="Idioma" data-en-aria-label="Language">
         <button type="button" data-set-lang="pt" aria-pressed="true" title="Português">PT</button>
@@ -80,7 +81,8 @@
             <li><svg class="icon" aria-hidden="true"><use href="#i-cap"/></svg><span lang="pt-BR">Engenharia da Computação · PUC-Campinas · conclusão dez/2026</span><span lang="en">Computer Engineering · PUC-Campinas · graduating Dec 2026</span></li>
           </ul>
           <div class="cta">
-            <a class="btn btn--primary" href="mailto:gabriel.yamamoto505@gmail.com"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><span lang="pt-BR">Falar comigo</span><span lang="en">Get in touch</span></a>
+            <a class="btn btn--primary" href="#projetos"><span lang="pt-BR">Ver projetos</span><span lang="en">See projects</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn--ghost" href="mailto:gabriel.yamamoto505@gmail.com"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><span lang="pt-BR">Falar comigo</span><span lang="en">Get in touch</span></a>
           </div>
           <ul class="socials">
             <li><a href="https://www.linkedin.com/in/gabriel-yamamoto-068552252" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a></li>
@@ -348,6 +350,230 @@
             <ul class="chips"><li lang="pt-BR">Ensino</li><li lang="en">Teaching</li><li lang="pt-BR">Comunicação</li><li lang="en">Communication</li><li lang="pt-BR">Cálculo</li><li lang="en">Calculus</li></ul>
           </article>
         </div>
+      </div>
+    </section>
+    <!-- ===================== PROJETOS ===================== -->
+    <section id="projetos" class="section">
+      <div class="container">
+        <header class="section__head" data-reveal>
+          <p class="eyebrow">03 · <span lang="pt-BR">Projetos</span><span lang="en">Projects</span></p>
+          <h2 lang="pt-BR">O problema, como eu fiz e o resultado</h2>
+          <h2 lang="en">The problem, how I built it and the outcome</h2>
+          <p class="section__intro" lang="pt-BR">Quatro projetos que mostram como eu trabalho — de IA e segurança a hardware, nuvem e compiladores.</p>
+          <p class="section__intro" lang="en">Four projects that show how I work — from AI and security to hardware, cloud and compilers.</p>
+        </header>
+
+        <div class="cases">
+          <!-- TCC -->
+          <article class="case" data-reveal>
+            <header class="case__head">
+              <p class="case__tag" lang="pt-BR">TCC · Engenharia da Computação · 2026</p>
+              <p class="case__tag" lang="en">Capstone project · Computer Engineering · 2026</p>
+              <h3 lang="pt-BR">TRIA: agentes de IA seguros com LLM local</h3>
+              <h3 lang="en">TRIA: secure AI agents with a local LLM</h3>
+              <p class="case__lead" lang="pt-BR">Como deixar um assistente de IA executar tarefas no computador sem abrir uma porta para ataques — e sem mandar seus dados para a nuvem.</p>
+              <p class="case__lead" lang="en">How to let an AI assistant run tasks on a computer without opening a door to attackers — and without sending your data to the cloud.</p>
+            </header>
+            <div class="case__grid">
+              <div class="case__body">
+                <p class="label" lang="pt-BR">O problema</p>
+                <p class="label" lang="en">The problem</p>
+                <p lang="pt-BR">Agentes de IA não só respondem: eles executam comandos e mexem em arquivos. Quando dependem de uma API na nuvem, expõem dados a terceiros e param quando a cota acaba — aconteceu no meu protótipo, que travou com um erro 429 de cota esgotada.</p>
+                <p lang="en">AI agents don't just answer — they run commands and touch files. When they depend on a cloud API, they expose data to third parties and stop when the quota runs out — it happened to my prototype, which halted with a 429 quota-exhausted error.</p>
+                <p class="label" lang="pt-BR">Como eu fiz</p>
+                <p class="label" lang="en">How I did it</p>
+                <ol class="steps" lang="pt-BR">
+                  <li>Desenhei uma arquitetura com três camadas de defesa, cada uma verificável em separado.</li>
+                  <li><strong>Rede:</strong> nada fica exposto na internet; o acesso remoto passa por uma VPN zero-trust (WireGuard, via Tailscale).</li>
+                  <li><strong>Controle:</strong> um gateway que só escuta na própria máquina (loopback) e exige token concentra autenticação e sessões.</li>
+                  <li><strong>Inteligência:</strong> o modelo roda localmente com Ollama, então o contexto não sai da máquina.</li>
+                  <li>Implementei um protótipo com três agentes — cada um com bot no Telegram, área de trabalho e credenciais próprias — e o testei numa VM isolada (VMware) e no WSL2 com GPU.</li>
+                </ol>
+                <ol class="steps" lang="en">
+                  <li>I designed an architecture with three layers of defense, each one verifiable on its own.</li>
+                  <li><strong>Network:</strong> nothing is exposed to the internet; remote access goes through a zero-trust VPN (WireGuard, via Tailscale).</li>
+                  <li><strong>Control:</strong> a gateway that only listens on the machine itself (loopback) and requires a token handles authentication and sessions.</li>
+                  <li><strong>Intelligence:</strong> the model runs locally with Ollama, so the context never leaves the machine.</li>
+                  <li>I implemented a prototype with three agents — each with its own Telegram bot, workspace and credentials — and tested it on an isolated VM (VMware) and on WSL2 with a GPU.</li>
+                </ol>
+                <p class="result" lang="pt-BR"><strong>O que descobri:</strong> numa RTX 3060, modelos de 7 a 9 bilhões de parâmetros geraram de 50,8 a 71,5 tokens por segundo — mas o mesmo mecanismo que dá essa potência enfraquece o isolamento: o gateway ficou alcançável a partir do Windows, e os discos dele, acessíveis ao agente. Já a VM isolada, com 4 GiB de memória, não comporta nenhum dos modelos. Ou seja: no hardware avaliado, isolamento forte empurra a IA para fora da máquina — um trade-off que precisa ser escolhido de forma consciente.</p>
+                <p class="result" lang="en"><strong>What I found:</strong> on an RTX 3060, 7–9 billion-parameter models generated 50.8 to 71.5 tokens per second — but the same mechanism that provides that power weakens isolation: the gateway was reachable from Windows, and its drives were accessible to the agent. The isolated VM, with 4 GiB of memory, can't fit any of the models. In short: on the hardware evaluated, strong isolation pushes AI off the machine — a trade-off that has to be made consciously.</p>
+              </div>
+              <aside class="case__side">
+                <ol class="flow" aria-label="Caminho de um pedido até o modelo" data-en-aria-label="Path of a request to the model">
+                  <li class="flow__node"><strong lang="pt-BR">Você</strong><strong lang="en">You</strong><small lang="pt-BR">acesso remoto</small><small lang="en">remote access</small></li>
+                  <li class="flow__node"><strong>VPN zero-trust</strong><small lang="pt-BR">rede · WireGuard/Tailscale</small><small lang="en">network · WireGuard/Tailscale</small></li>
+                  <li class="flow__node"><strong>Gateway</strong><small lang="pt-BR">controle · loopback + token</small><small lang="en">control · loopback + token</small></li>
+                  <li class="flow__node"><strong lang="pt-BR">Agente</strong><strong lang="en">Agent</strong><small>OpenClaw</small></li>
+                  <li class="flow__node"><strong lang="pt-BR">LLM local</strong><strong lang="en">Local LLM</strong><small lang="pt-BR">inteligência · Ollama</small><small lang="en">intelligence · Ollama</small></li>
+                </ol>
+                <ul class="chips"><li>LLM</li><li>Ollama</li><li>OpenClaw</li><li>Zero-trust</li><li>Tailscale</li><li>Linux</li><li>WSL2</li><li>VMware</li><li>Telegram</li></ul>
+                <p class="case__meta" lang="pt-BR">Orientador: Prof. Ademar Takeo Akabane · PUC-Campinas · defesa em out/2026</p>
+                <p class="case__meta" lang="en">Advisor: Prof. Ademar Takeo Akabane · PUC-Campinas · defense in Oct 2026</p>
+              </aside>
+            </div>
+          </article>
+
+          <!-- IoT -->
+          <article class="case" data-reveal>
+            <header class="case__head">
+              <p class="case__tag" lang="pt-BR">IoT · projeto em equipe (4 pessoas) · 2026</p>
+              <p class="case__tag" lang="en">IoT · team project (4 people) · 2026</p>
+              <h3 lang="pt-BR">Medidor inteligente de vazão de água</h3>
+              <h3 lang="en">Smart water flow monitor</h3>
+              <p class="case__lead" lang="pt-BR">Um medidor que mostra, em tempo real e de qualquer lugar, quanta água está passando pelo cano — e avisa quando algo parece vazamento.</p>
+              <p class="case__lead" lang="en">A meter that shows, in real time and from anywhere, how much water is flowing through a pipe — and warns when something looks like a leak.</p>
+            </header>
+            <div class="case__grid">
+              <div class="case__body">
+                <p class="label" lang="pt-BR">O problema</p>
+                <p class="label" lang="en">The problem</p>
+                <p lang="pt-BR">O hidrômetro comum é lido uma vez por mês, então um vazamento pode passar semanas sem ninguém perceber.</p>
+                <p lang="en">A regular water meter is read once a month, so a leak can go unnoticed for weeks.</p>
+                <p class="label" lang="pt-BR">Como fizemos</p>
+                <p class="label" lang="en">How we built it</p>
+                <ol class="steps" lang="pt-BR">
+                  <li><strong>Sensor:</strong> um YF-S201 (efeito Hall) gera um pulso elétrico a cada volta do rotor movido pela água.</li>
+                  <li><strong>Placa:</strong> um Heltec WiFi LoRa 32 (ESP32) conta os pulsos e calcula a vazão em L/min e o volume acumulado.</li>
+                  <li><strong>Nuvem:</strong> os dados vão por Wi-Fi para o ThingsBoard Cloud, que guarda a telemetria; também estudamos LoRa para longas distâncias.</li>
+                  <li><strong>Painel:</strong> um dashboard web em Flask mostra vazão atual, média móvel, tendência (regressão linear), projeção de consumo em 24 h, alertas e um relatório gerado automaticamente.</li>
+                </ol>
+                <ol class="steps" lang="en">
+                  <li><strong>Sensor:</strong> a YF-S201 (Hall effect) sends an electrical pulse each time the water spins its rotor.</li>
+                  <li><strong>Board:</strong> a Heltec WiFi LoRa 32 (ESP32) counts the pulses and computes the flow in L/min and the accumulated volume.</li>
+                  <li><strong>Cloud:</strong> the data travels over Wi-Fi to ThingsBoard Cloud, which stores the telemetry; we also studied LoRa for long distances.</li>
+                  <li><strong>Dashboard:</strong> a Flask web dashboard shows current flow, moving average, trend (linear regression), a 24-hour consumption forecast, alerts and an auto-generated report.</li>
+                </ol>
+                <p class="result" lang="pt-BR"><strong>Resultado:</strong> sistema funcionando de ponta a ponta, do sensor ao painel. Próximo passo em estudo: detectar ar na tubulação, que faz hidrômetros cobrarem por água que não passou.</p>
+                <p class="result" lang="en"><strong>Result:</strong> an end-to-end working system, from sensor to dashboard. Next step under study: detecting air in the pipes, which makes meters charge for water that never flowed.</p>
+              </div>
+              <aside class="case__side">
+                <ol class="flow" aria-label="Caminho do dado, do sensor ao painel" data-en-aria-label="Data path, from sensor to dashboard">
+                  <li class="flow__node"><strong>Sensor YF-S201</strong><small lang="pt-BR">efeito Hall · pulsos</small><small lang="en">Hall effect · pulses</small></li>
+                  <li class="flow__node"><strong>ESP32</strong><small>Heltec WiFi LoRa 32 · L/min</small></li>
+                  <li class="flow__node"><strong>ThingsBoard Cloud</strong><small lang="pt-BR">telemetria via Wi-Fi</small><small lang="en">telemetry over Wi-Fi</small></li>
+                  <li class="flow__node"><strong>Dashboard Flask</strong><small lang="pt-BR">alertas · projeções · relatório</small><small lang="en">alerts · forecasts · report</small></li>
+                </ol>
+                <ul class="chips"><li>ESP32</li><li>IoT</li><li>Wi-Fi</li><li>LoRa</li><li>ThingsBoard</li><li>Flask</li><li>Python</li><li lang="pt-BR">Análise de dados</li><li lang="en">Data analysis</li></ul>
+              </aside>
+            </div>
+            <figure class="case__media">
+              <img src="assets/img/iot-dashboard.jpg" width="1428" height="715" loading="lazy"
+                   alt="Dashboard inteligente de vazão de água com vazão atual, total acumulado, média móvel, pico recente, tendência, projeção de 24 horas, estabilidade e diagnóstico automático"
+                   data-en-alt="Smart water flow dashboard showing current flow, total volume, moving average, recent peak, trend, 24-hour forecast, stability and automatic diagnosis">
+              <figcaption><span lang="pt-BR">O dashboard em tempo real, com diagnóstico automático do consumo.</span><span lang="en">The real-time dashboard, with automatic consumption diagnosis.</span></figcaption>
+            </figure>
+          </article>
+
+          <!-- Compilador -->
+          <article class="case" data-reveal>
+            <header class="case__head">
+              <p class="case__tag" lang="pt-BR">Compiladores · PUC-Campinas · 2026</p>
+              <p class="case__tag" lang="en">Compilers · PUC-Campinas · 2026</p>
+              <h3 lang="pt-BR">Compilador MicroC, etapa por etapa</h3>
+              <h3 lang="en">MicroC compiler, stage by stage</h3>
+              <p class="case__lead" lang="pt-BR">Um compilador escrito em Python para a MicroC, uma linguagem parecida com C: ele lê o código, entende a estrutura e aponta cada erro com linha e coluna.</p>
+              <p class="case__lead" lang="en">A compiler written in Python for MicroC, a C-like language: it reads the code, understands its structure and points out every error with line and column.</p>
+            </header>
+            <div class="case__grid">
+              <div class="case__body">
+                <p class="label" lang="pt-BR">O desafio</p>
+                <p class="label" lang="en">The challenge</p>
+                <p lang="pt-BR">Construir as fases de um compilador de verdade a partir de uma especificação formal, com testes automáticos conferindo cada entrega.</p>
+                <p lang="en">Build the phases of a real compiler from a formal specification, with automated tests checking every delivery.</p>
+                <p class="label" lang="pt-BR">Como eu fiz</p>
+                <p class="label" lang="en">How I did it</p>
+                <ol class="steps" lang="pt-BR">
+                  <li><strong>Análise léxica:</strong> um autômato dirigido por tabela quebra o código em tokens (palavras, números, símbolos), cada um com sua posição exata.</li>
+                  <li><strong>Gramática LL(1):</strong> remoção da recursão à esquerda e cálculo dos conjuntos FIRST, FOLLOW e START, para que a gramática possa ser lida sem voltar atrás.</li>
+                  <li><strong>Análise sintática:</strong> um parser por descida recursiva, com uma função por regra da gramática, monta a árvore sintática (AST).</li>
+                  <li><strong>Análise semântica:</strong> resolução de nomes, escopos, tabela de símbolos e verificação de tipos, com mensagens de erro claras.</li>
+                </ol>
+                <ol class="steps" lang="en">
+                  <li><strong>Lexical analysis:</strong> a table-driven automaton splits the code into tokens (words, numbers, symbols), each with its exact position.</li>
+                  <li><strong>LL(1) grammar:</strong> left-recursion removal and FIRST, FOLLOW and START set computation, so the grammar can be parsed without backtracking.</li>
+                  <li><strong>Parsing:</strong> a recursive-descent parser, with one function per grammar rule, builds the abstract syntax tree (AST).</li>
+                  <li><strong>Semantic analysis:</strong> name resolution, scopes, a symbol table and type checking, with clear error messages.</li>
+                </ol>
+                <p class="result" lang="pt-BR"><strong>Resultado:</strong> as quatro etapas entregues passam em 88 testes automatizados (pytest). Próxima etapa: análise de fluxo de controle.</p>
+                <p class="result" lang="en"><strong>Result:</strong> the four delivered stages pass 88 automated tests (pytest). Next stage: control-flow analysis.</p>
+                <p class="note" lang="pt-BR">Feito sobre o código-base da disciplina, que define as interfaces e os testes.</p>
+                <p class="note" lang="en">Built on the course's starter code, which defines the interfaces and tests.</p>
+              </div>
+              <aside class="case__side">
+                <ol class="flow" aria-label="Fases do compilador" data-en-aria-label="Compiler phases">
+                  <li class="flow__node"><strong lang="pt-BR">Código MicroC</strong><strong lang="en">MicroC source</strong><small>int main() { … }</small></li>
+                  <li class="flow__node"><strong lang="pt-BR">Léxico</strong><strong lang="en">Lexer</strong><small>tokens</small></li>
+                  <li class="flow__node"><strong>Parser</strong><small lang="pt-BR">árvore sintática (AST)</small><small lang="en">syntax tree (AST)</small></li>
+                  <li class="flow__node"><strong lang="pt-BR">Semântica</strong><strong lang="en">Semantics</strong><small lang="pt-BR">escopos · tipos · erros com linha e coluna</small><small lang="en">scopes · types · errors with line and column</small></li>
+                </ol>
+                <ul class="chips"><li>Python</li><li lang="pt-BR">Compiladores</li><li lang="en">Compilers</li><li lang="pt-BR">Autômatos</li><li lang="en">Automata</li><li>LL(1)</li><li>AST</li><li>pytest</li><li>GitHub Actions</li></ul>
+                <div class="case__links">
+                  <a class="btn btn--ghost btn--sm" href="https://github.com/Yamakasuki/Lexer" target="_blank" rel="noopener"><span lang="pt-BR">Léxico</span><span lang="en">Lexer</span><svg class="icon" aria-hidden="true"><use href="#i-out"/></svg></a>
+                  <a class="btn btn--ghost btn--sm" href="https://github.com/Yamakasuki/LL-1-Grammar-Conversion" target="_blank" rel="noopener"><span lang="pt-BR">Gramática LL(1)</span><span lang="en">LL(1) grammar</span><svg class="icon" aria-hidden="true"><use href="#i-out"/></svg></a>
+                  <a class="btn btn--ghost btn--sm" href="https://github.com/Yamakasuki/Parser-Etapa3" target="_blank" rel="noopener">Parser<svg class="icon" aria-hidden="true"><use href="#i-out"/></svg></a>
+                  <a class="btn btn--ghost btn--sm" href="https://github.com/Yamakasuki/Semantic-Analysis-1" target="_blank" rel="noopener"><span lang="pt-BR">Semântica</span><span lang="en">Semantics</span><svg class="icon" aria-hidden="true"><use href="#i-out"/></svg></a>
+                </div>
+              </aside>
+            </div>
+          </article>
+
+          <!-- Contêineres -->
+          <article class="case" data-reveal>
+            <header class="case__head">
+              <p class="case__tag">Cloud · DevOps · 2025</p>
+              <h3 lang="pt-BR">API de Machine Learning em contêineres</h3>
+              <h3 lang="en">Containerized Machine Learning API</h3>
+              <p class="case__lead" lang="pt-BR">Peguei uma aplicação de IA que rodava em três máquinas virtuais e a transformei em contêineres que sobem com um único comando.</p>
+              <p class="case__lead" lang="en">I took an AI application that ran on three virtual machines and turned it into containers that start with a single command.</p>
+            </header>
+            <div class="case__grid">
+              <div class="case__body">
+                <p class="label" lang="pt-BR">O problema</p>
+                <p class="label" lang="en">The problem</p>
+                <p lang="pt-BR">O ambiente original usava três VMs Vagrant (aplicação, banco e proxy) montadas por scripts de shell — pesado e difícil de reproduzir em outra máquina.</p>
+                <p lang="en">The original environment used three Vagrant VMs (app, database and proxy) set up by shell scripts — heavy and hard to reproduce on another machine.</p>
+                <p class="label" lang="pt-BR">Como eu fiz</p>
+                <p class="label" lang="en">How I did it</p>
+                <ol class="steps" lang="pt-BR">
+                  <li>Empacotei a API Flask, que serve uma rede neural (MLP), numa imagem Docker.</li>
+                  <li>Orquestrei a aplicação com Docker Compose, com o nginx como proxy reverso na frente.</li>
+                  <li>Criei uma pipeline de CI no GitHub Actions que sobe os contêineres e executa testes unitários (as funções da rede) e de integração (chamadas reais à API).</li>
+                  <li>Gerei um modelo de teste leve para a CI não depender do arquivo pesado do modelo.</li>
+                </ol>
+                <ol class="steps" lang="en">
+                  <li>I packaged the Flask API, which serves a neural network (MLP), into a Docker image.</li>
+                  <li>I orchestrated it with Docker Compose, with nginx as a reverse proxy in front.</li>
+                  <li>I created a CI pipeline on GitHub Actions that brings up the containers and runs unit tests (the network's functions) and integration tests (real API calls).</li>
+                  <li>I generated a lightweight test model so CI doesn't depend on the heavy model file.</li>
+                </ol>
+                <p class="result" lang="pt-BR"><strong>Resultado:</strong> três VMs viraram dois contêineres que sobem com <code>docker compose up</code>, com testes prontos para rodar a cada push.</p>
+                <p class="result" lang="en"><strong>Result:</strong> three VMs became two containers that start with <code>docker compose up</code>, with tests ready to run on every push.</p>
+                <p class="note" lang="pt-BR">Partiu do projeto de um colega; minha contribuição foi a migração para contêineres e a CI.</p>
+                <p class="note" lang="en">It started from a classmate's project; my contribution was the move to containers and the CI.</p>
+              </div>
+              <aside class="case__side">
+                <ol class="flow" aria-label="Caminho de uma requisição" data-en-aria-label="Path of a request">
+                  <li class="flow__node"><strong lang="pt-BR">Navegador</strong><strong lang="en">Browser</strong><small>:8080</small></li>
+                  <li class="flow__node"><strong>nginx</strong><small lang="pt-BR">proxy reverso</small><small lang="en">reverse proxy</small></li>
+                  <li class="flow__node"><strong>API Flask</strong><small>:5000</small></li>
+                  <li class="flow__node"><strong lang="pt-BR">Rede neural (MLP)</strong><strong lang="en">Neural network (MLP)</strong><small lang="pt-BR">modelo treinado</small><small lang="en">trained model</small></li>
+                </ol>
+                <ol class="pipeline" aria-label="Pipeline de CI" data-en-aria-label="CI pipeline">
+                  <li>push</li><li>compose up --build</li><li>pytest</li>
+                </ol>
+                <ul class="chips"><li>Docker</li><li>Docker Compose</li><li>nginx</li><li>Flask</li><li>GitHub Actions</li><li>pytest</li><li>CI/CD</li></ul>
+                <div class="case__links">
+                  <a class="btn btn--ghost btn--sm" href="https://github.com/Yamakasuki/JackFoster" target="_blank" rel="noopener"><span lang="pt-BR">Ver código</span><span lang="en">View code</span><svg class="icon" aria-hidden="true"><use href="#i-out"/></svg></a>
+                </div>
+              </aside>
+            </div>
+          </article>
+        </div>
+
+        <p class="more" data-reveal>
+          <a class="link" href="https://github.com/Yamakasuki?tab=repositories" target="_blank" rel="noopener"><span lang="pt-BR">Ver todos os repositórios no GitHub</span><span lang="en">See all repositories on GitHub</span><svg class="icon" aria-hidden="true"><use href="#i-out"/></svg></a>
+        </p>
       </div>
     </section>
     <!-- /secoes -->
