@@ -34,3 +34,35 @@ for (const b of document.querySelectorAll("[data-set-lang]")) {
   b.addEventListener("click", () => definirIdioma(b.dataset.setLang, true));
 }
 definirIdioma(root.dataset.lang === "en" ? "en" : "pt", false);
+
+// Blocos aparecem ao entrar na tela (desligado para quem prefere menos movimento).
+if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const aparecer = new IntersectionObserver((entradas) => {
+    for (const e of entradas) {
+      if (e.isIntersecting) {
+        e.target.classList.add("is-in");
+        aparecer.unobserve(e.target);
+      }
+    }
+  }, { rootMargin: "0px 0px -8% 0px" });
+  for (const el of document.querySelectorAll("[data-reveal]")) aparecer.observe(el);
+  root.classList.add("reveal");
+}
+
+// Destaca no menu a seção que está no meio da tela.
+const links = [...document.querySelectorAll(".nav a")];
+if ("IntersectionObserver" in window) {
+  const menu = new IntersectionObserver((entradas) => {
+    for (const e of entradas) {
+      if (!e.isIntersecting) continue;
+      for (const a of links) {
+        if (a.getAttribute("href") === "#" + e.target.id) a.setAttribute("aria-current", "true");
+        else a.removeAttribute("aria-current");
+      }
+    }
+  }, { rootMargin: "-45% 0px -50% 0px" });
+  for (const a of links) {
+    const alvo = document.querySelector(a.getAttribute("href"));
+    if (alvo) menu.observe(alvo);
+  }
+}
