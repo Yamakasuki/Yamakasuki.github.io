@@ -284,7 +284,7 @@ strong { color: var(--text); font-weight: 600; }
   border: 1px solid var(--line-strong); border-radius: 12px; background: var(--surface-2);
 }
 .flow__node strong { display: block; font: 600 1rem/1.25 var(--font-display); }
-.flow__node small { display: block; margin-top: .25rem; color: var(--muted); font: 500 .76rem/1.35 var(--font-mono); }
+.flow__node small { display: block; margin-top: .25rem; color: var(--muted); font: 500 .76rem/1.35 var(--font-mono); overflow-wrap: anywhere; }
 .flow > li:not(:last-child)::after { /* linha */
   content: ""; position: absolute; left: 50%; bottom: -1.7rem; width: 2px; height: calc(1.7rem - 6px);
   transform: translateX(-50%); background: linear-gradient(var(--accent), rgba(255, 77, 94, 0.35));
@@ -293,7 +293,7 @@ strong { color: var(--text); font-weight: 600; }
   content: ""; position: absolute; left: 50%; bottom: -1.7rem; transform: translateX(-50%);
   border: 6px solid transparent; border-top-color: var(--accent); border-bottom-width: 0;
 }
-.flow__fork { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+.flow__fork { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
 
 /* Projetos (estudos de caso) */
 .cases { display: grid; gap: clamp(20px, 3vw, 32px); }
@@ -394,6 +394,7 @@ code { padding: .1rem .35rem; border-radius: 6px; background: rgba(255, 255, 255
 .contact h2 { font-size: clamp(2rem, 5vw, 3.2rem); letter-spacing: -0.02em; }
 .contact__text { max-width: 38rem; margin: 1rem auto 0; color: var(--muted); font-size: 1.08rem; }
 .contact__cta { justify-content: center; }
+.contact__cta .btn { max-width: 100%; overflow-wrap: anywhere; } /* o e-mail quebra em telas estreitas */
 
 /* Aparecer ao rolar (só com JS e sem preferência por menos movimento) */
 .reveal [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
@@ -407,10 +408,10 @@ code { padding: .1rem .35rem; border-radius: 6px; background: rgba(255, 255, 255
 
 /* ---------- Telas menores ---------- */
 @media (max-width: 900px) {
-  .hero__grid { grid-template-columns: 1fr; }
+  .hero__grid { grid-template-columns: minmax(0, 1fr); }
   .graph { width: min(100%, 440px); }
   .stats__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .about, .jobs, .fronts, .front--wide, .case__grid, .certs, .extras { grid-template-columns: 1fr; }
+  .about, .jobs, .fronts, .front--wide, .case__grid, .certs, .extras { grid-template-columns: minmax(0, 1fr); }
   .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 980px) {
@@ -427,9 +428,9 @@ code { padding: .1rem .35rem; border-radius: 6px; background: rgba(255, 255, 255
   .job { padding: 18px 16px; }
   .front { padding: 16px 14px; }
   .case { padding: 20px 16px; }
-  .skills { grid-template-columns: 1fr; }
+  .skills { grid-template-columns: minmax(0, 1fr); }
   .timeline::before, .year::after { display: none; }
-  .year { grid-template-columns: 1fr; gap: .5rem; }
+  .year { grid-template-columns: minmax(0, 1fr); gap: .5rem; }
   .year__label { padding-top: 0; text-align: left; }
   .year__items { padding: .9rem 1rem; }
   .year__items > li { flex-direction: column; gap: .35rem; }
