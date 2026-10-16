@@ -382,6 +382,19 @@ code { padding: .1rem .35rem; border-radius: 6px; background: rgba(255, 255, 255
 .skill h3 { margin-bottom: .85rem; font-size: 1.05rem; }
 .skill--wide { grid-column: 1 / -1; }
 
+/* Contato */
+.contact {
+  position: relative; overflow: hidden; text-align: center;
+  padding: clamp(36px, 7vw, 72px) clamp(20px, 5vw, 64px);
+  border: 1px solid var(--line-strong); border-radius: calc(var(--radius) + 8px);
+  background:
+    radial-gradient(520px 260px at 50% 0, rgba(255, 77, 94, 0.18), transparent 70%),
+    var(--surface);
+}
+.contact h2 { font-size: clamp(2rem, 5vw, 3.2rem); letter-spacing: -0.02em; }
+.contact__text { max-width: 38rem; margin: 1rem auto 0; color: var(--muted); font-size: 1.08rem; }
+.contact__cta { justify-content: center; }
+
 /* Aparecer ao rolar (só com JS e sem preferência por menos movimento) */
 .reveal [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
 .reveal [data-reveal].is-in { opacity: 1; transform: none; }
