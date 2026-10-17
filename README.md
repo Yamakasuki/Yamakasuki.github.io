@@ -3,7 +3,7 @@
 Site pessoal publicado em **https://yamakasuki.github.io/**, em português e inglês
 (versão em inglês: https://yamakasuki.github.io/?lang=en).
 
-Desenvolvedor de software com foco em IA na Samsung Research Brasil · Engenharia da
+Desenvolvedor de software com foco em IA na Samsung Research Brasil · Engenharia de
 Computação na PUC-Campinas.
 
 ## Estrutura
