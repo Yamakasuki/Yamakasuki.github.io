@@ -438,7 +438,23 @@ body:has(.menu:popover-open) .secao .icon { rotate: 180deg; }
     animation: pulso 3s linear calc(var(--i, 0) * .5s) infinite;
   }
   .flow.vivo .flow__node, .pipeline.vivo > li { animation: acende 3s ease-out calc(var(--i, 0) * .5s) infinite; }
+  /* A etapa que ainda não existe não recebe o pulso. */
+  .flow.vivo > li:has(+ .flow__node--proxima)::after { animation: none; background: repeating-linear-gradient(var(--accent) 0 4px, transparent 4px 8px); }
+  .flow.vivo .flow__node--proxima { animation: none; }
 }
+/* Etapa futura (ainda em desenvolvimento): tracejada e apagada. */
+.flow__node--proxima { border-style: dashed; background: transparent; }
+.flow__node--proxima strong, .flow__node--proxima small { color: var(--muted); }
+.flow > li:has(+ .flow__node--proxima)::after { background: repeating-linear-gradient(var(--accent) 0 4px, transparent 4px 8px); opacity: .7; }
+
+/* Terminal: o código de entrada e a saída real do programa. */
+.terminal { margin: 0; overflow: hidden; border: 1px solid var(--line-strong); border-radius: 12px; background: #07070b; }
+.terminal pre { margin: 0; padding: .9rem 1rem; font: 500 .8rem/1.6 var(--font-mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+.terminal code { padding: 0; border-radius: 0; background: none; font: inherit; }
+.terminal__codigo { color: var(--text); border-bottom: 1px dashed var(--line-strong); }
+.terminal__saida { color: #ff8f9c; }
+.terminal__cmd { color: var(--muted); }
+.terminal figcaption { padding: .65rem 1rem .75rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .84rem; }
 
 /* Índice dos projetos: o resultado de cada um, com link para o estudo de caso */
 .indice { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin-bottom: clamp(28px, 4vw, 44px); }
@@ -483,6 +499,10 @@ body:has(.menu:popover-open) .secao .icon { rotate: 180deg; }
 .case__body { display: flex; flex-direction: column; gap: .75rem; }
 .case__body > p:not([class]) { color: var(--muted); }
 .case__side { display: flex; flex-direction: column; gap: 1.2rem; }
+/* "Minha parte" em projeto de equipe: o que foi feito por mim, destacado do resto. */
+.parte { padding: 1rem 1.15rem; border: 1px solid rgba(255, 138, 76, 0.3); border-radius: var(--radius-sm); background: rgba(255, 138, 76, 0.07); }
+.parte .label { margin-top: 0; color: var(--accent-2); }
+.parte .bullets { margin-top: .7rem; }
 .case__meta, .note { color: var(--muted); font-size: .88rem; }
 .note { padding-top: .75rem; border-top: 1px dashed var(--line-strong); }
 .case__links { display: flex; flex-wrap: wrap; gap: .5rem; }

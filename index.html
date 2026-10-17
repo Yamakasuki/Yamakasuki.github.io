@@ -460,7 +460,7 @@
               <span class="proj__tag" lang="pt-BR">IoT · equipe de 4</span><span class="proj__tag" lang="en">IoT · team of 4</span>
               <strong class="proj__titulo" lang="pt-BR">Medidor de vazão de água</strong><strong class="proj__titulo" lang="en">Water flow monitor</strong>
               <span class="proj__dado" lang="pt-BR">Tempo real</span><span class="proj__dado" lang="en">Real time</span>
-              <span class="proj__sub" lang="pt-BR">do sensor ao painel na nuvem, com alerta de vazamento</span><span class="proj__sub" lang="en">from sensor to cloud dashboard, with leak alerts</span>
+              <span class="proj__sub" lang="pt-BR">do sensor ao painel; minha parte: previsão de vazamentos e dashboards</span><span class="proj__sub" lang="en">sensor to dashboard; my part: leak forecasting and dashboards</span>
             </a>
           </li>
           <li>
@@ -469,7 +469,7 @@
               <span class="proj__tag" lang="pt-BR">Compiladores</span><span class="proj__tag" lang="en">Compilers</span>
               <strong class="proj__titulo" lang="pt-BR">Compilador MicroC</strong><strong class="proj__titulo" lang="en">MicroC compiler</strong>
               <span class="proj__dado" lang="pt-BR">88 testes</span><span class="proj__dado" lang="en">88 tests</span>
-              <span class="proj__sub" lang="pt-BR">automatizados, aprovados nas quatro etapas entregues</span><span class="proj__sub" lang="en">automated, passing across the four delivered stages</span>
+              <span class="proj__sub" lang="pt-BR">aprovados nas quatro etapas entregues até agora; segue em desenvolvimento</span><span class="proj__sub" lang="en">passing across the four stages delivered so far; still in progress</span>
             </a>
           </li>
           <li>
@@ -564,6 +564,20 @@
                   <li><strong>Cloud:</strong> the data travels over Wi-Fi to ThingsBoard Cloud, which stores the telemetry; we also studied LoRa for long distances.</li>
                   <li><strong>Dashboard:</strong> a Flask web dashboard shows current flow, moving average, trend (linear regression), a 24-hour consumption forecast, alerts and an auto-generated report.</li>
                 </ol>
+                <div class="parte">
+                  <p class="label" lang="pt-BR">Minha parte</p>
+                  <p class="label" lang="en">My part</p>
+                  <ul class="bullets" lang="pt-BR">
+                    <li><strong>Previsão de vazamentos:</strong> desenvolvi um modelo de previsão (forecasting) que antecipa vazamentos a partir do consumo anterior.</li>
+                    <li><strong>Dashboards:</strong> construí os painéis de visualização, que mostram a vazão, as projeções e os alertas.</li>
+                    <li><strong>Comunicação com o ESP32:</strong> escrevi o código que se comunica com a placa.</li>
+                  </ul>
+                  <ul class="bullets" lang="en">
+                    <li><strong>Leak forecasting:</strong> I built a forecasting model that anticipates leaks from past consumption.</li>
+                    <li><strong>Dashboards:</strong> I built the visualization dashboards, which show the flow, the forecasts and the alerts.</li>
+                    <li><strong>ESP32 communication:</strong> I wrote the code that communicates with the board.</li>
+                  </ul>
+                </div>
                 <p class="result" lang="pt-BR"><strong>Resultado:</strong> sistema funcionando de ponta a ponta, do sensor ao painel. Próximo passo em estudo: detectar ar na tubulação, que faz hidrômetros cobrarem por água que não passou.</p>
                 <p class="result" lang="en"><strong>Result:</strong> an end-to-end working system, from sensor to dashboard. Next step under study: detecting air in the pipes, which makes meters charge for water that never flowed.</p>
               </div>
@@ -574,7 +588,7 @@
                   <li class="flow__node"><strong>ThingsBoard Cloud</strong><small lang="pt-BR">telemetria via Wi-Fi</small><small lang="en">telemetry over Wi-Fi</small></li>
                   <li class="flow__node"><strong>Dashboard Flask</strong><small lang="pt-BR">alertas · projeções · relatório</small><small lang="en">alerts · forecasts · report</small></li>
                 </ol>
-                <ul class="chips"><li>ESP32</li><li>IoT</li><li>Wi-Fi</li><li>LoRa</li><li>ThingsBoard</li><li>Flask</li><li>Python</li><li lang="pt-BR">Análise de dados</li><li lang="en">Data analysis</li></ul>
+                <ul class="chips"><li>ESP32</li><li>IoT</li><li>Wi-Fi</li><li>LoRa</li><li>ThingsBoard</li><li>Flask</li><li>Python</li><li>Forecasting</li><li lang="pt-BR">Análise de dados</li><li lang="en">Data analysis</li></ul>
               </aside>
             </div>
             <figure class="case__media">
@@ -588,8 +602,8 @@
           <!-- Compilador -->
           <article id="projeto-microc" class="case" data-reveal>
             <header class="case__head">
-              <p class="case__tag" lang="pt-BR">Compiladores · PUC-Campinas · 2026</p>
-              <p class="case__tag" lang="en">Compilers · PUC-Campinas · 2026</p>
+              <p class="case__tag" lang="pt-BR">Compiladores · PUC-Campinas · 2026 · em desenvolvimento</p>
+              <p class="case__tag" lang="en">Compilers · PUC-Campinas · 2026 · in progress</p>
               <h3 lang="pt-BR">Compilador MicroC, etapa por etapa</h3>
               <h3 lang="en">MicroC compiler, stage by stage</h3>
               <p class="case__lead" lang="pt-BR">Um compilador escrito em Python para a MicroC, uma linguagem parecida com C: ele lê o código, entende a estrutura e aponta cada erro com linha e coluna.</p>
@@ -607,16 +621,30 @@
                   <li><strong>Análise léxica:</strong> um autômato dirigido por tabela quebra o código em tokens (palavras, números, símbolos), cada um com sua posição exata.</li>
                   <li><strong>Gramática LL(1):</strong> remoção da recursão à esquerda e cálculo dos conjuntos FIRST, FOLLOW e START, para que a gramática possa ser lida sem voltar atrás.</li>
                   <li><strong>Análise sintática:</strong> um parser por descida recursiva, com uma função por regra da gramática, monta a árvore sintática (AST).</li>
-                  <li><strong>Análise semântica:</strong> resolução de nomes, escopos, tabela de símbolos e verificação de tipos, com mensagens de erro claras.</li>
+                  <li><strong>Análise semântica:</strong> duas passagens pela árvore — resolução de nomes (escopos e tabela de símbolos) e verificação de tipos — apontam erros como variável não declarada, tipos incompatíveis e chamada com argumentos errados.</li>
                 </ol>
                 <ol class="steps" lang="en">
                   <li><strong>Lexical analysis:</strong> a table-driven automaton splits the code into tokens (words, numbers, symbols), each with its exact position.</li>
                   <li><strong>LL(1) grammar:</strong> left-recursion removal and FIRST, FOLLOW and START set computation, so the grammar can be parsed without backtracking.</li>
                   <li><strong>Parsing:</strong> a recursive-descent parser, with one function per grammar rule, builds the abstract syntax tree (AST).</li>
-                  <li><strong>Semantic analysis:</strong> name resolution, scopes, a symbol table and type checking, with clear error messages.</li>
+                  <li><strong>Semantic analysis:</strong> two passes over the tree — name resolution (scopes and a symbol table) and type checking — flag errors such as undeclared variables, mismatched types and calls with the wrong arguments.</li>
                 </ol>
-                <p class="result" lang="pt-BR"><strong>Resultado:</strong> as quatro etapas entregues passam em 88 testes automatizados (pytest). Próxima etapa: análise de fluxo de controle.</p>
-                <p class="result" lang="en"><strong>Result:</strong> the four delivered stages pass 88 automated tests (pytest). Next stage: control-flow analysis.</p>
+                <p class="label" lang="pt-BR">Na prática</p>
+                <p class="label" lang="en">In practice</p>
+                <figure class="terminal">
+                  <pre class="terminal__codigo"><code>int main() {
+    x = 1;
+    ausente(y);
+    return 0;
+}</code></pre>
+                  <pre class="terminal__saida"><code><span class="terminal__cmd">$ python runner.py names.mc</span>
+erro semântico [undeclared_variable] em 2:5: 'x' não declarada
+erro semântico [undeclared_function] em 3:5: 'ausente' não existe
+erro semântico [undeclared_variable] em 3:13: 'y' não declarada</code></pre>
+                  <figcaption><span lang="pt-BR">Saída real da análise semântica: cada erro vem com o tipo, a linha e a coluna.</span><span lang="en">Real output from the semantic analysis (messages in Portuguese): each error comes with its type, line and column.</span></figcaption>
+                </figure>
+                <p class="result" lang="pt-BR"><strong>Resultado:</strong> as quatro etapas entregues até agora passam em 88 testes automatizados (pytest). O compilador segue em desenvolvimento: a próxima etapa é a análise de fluxo, que vai apontar variável usada antes de receber valor, código inalcançável e função que não retorna em todos os caminhos.</p>
+                <p class="result" lang="en"><strong>Result:</strong> the four stages delivered so far pass 88 automated tests (pytest). The compiler is still in development: the next stage is flow analysis, which will flag variables used before they get a value, unreachable code and functions that don't return on every path.</p>
                 <p class="note" lang="pt-BR">Feito sobre o código-base da disciplina, que define as interfaces e os testes.</p>
                 <p class="note" lang="en">Built on the course's starter code, which defines the interfaces and tests.</p>
               </div>
@@ -626,6 +654,7 @@
                   <li class="flow__node"><strong lang="pt-BR">Léxico</strong><strong lang="en">Lexer</strong><small>tokens</small></li>
                   <li class="flow__node"><strong>Parser</strong><small lang="pt-BR">árvore sintática (AST)</small><small lang="en">syntax tree (AST)</small></li>
                   <li class="flow__node"><strong lang="pt-BR">Semântica</strong><strong lang="en">Semantics</strong><small lang="pt-BR">escopos · tipos · erros com linha e coluna</small><small lang="en">scopes · types · errors with line and column</small></li>
+                  <li class="flow__node flow__node--proxima"><strong lang="pt-BR">Análise de fluxo</strong><strong lang="en">Flow analysis</strong><small lang="pt-BR">próxima etapa · em desenvolvimento</small><small lang="en">next stage · in progress</small></li>
                 </ol>
                 <ul class="chips"><li>Python</li><li lang="pt-BR">Compiladores</li><li lang="en">Compilers</li><li lang="pt-BR">Autômatos</li><li lang="en">Automata</li><li>LL(1)</li><li>AST</li><li>pytest</li><li>GitHub Actions</li></ul>
                 <div class="case__links">
@@ -744,7 +773,7 @@
             <ul class="year__items">
               <li><span class="tag tag--project" lang="pt-BR">Projeto</span><span class="tag tag--project" lang="en">Project</span><span lang="pt-BR"><span class="when">mar–mai</span> Medidor inteligente de vazão de água (IoT)</span><span lang="en"><span class="when">Mar–May</span> Smart water flow monitor (IoT)</span></li>
               <li><span class="tag tag--cert" lang="pt-BR">Certificado</span><span class="tag tag--cert" lang="en">Certificate</span><span lang="pt-BR"><span class="when">jul</span> Real-World AI with Claude</span><span lang="en"><span class="when">Jul</span> Real-World AI with Claude</span></li>
-              <li><span class="tag tag--project" lang="pt-BR">Projeto</span><span class="tag tag--project" lang="en">Project</span><span lang="pt-BR"><span class="when">ago–out</span> Compilador MicroC</span><span lang="en"><span class="when">Aug–Oct</span> MicroC compiler</span></li>
+              <li><span class="tag tag--project" lang="pt-BR">Projeto</span><span class="tag tag--project" lang="en">Project</span><span lang="pt-BR"><span class="when">desde ago</span> Compilador MicroC, em desenvolvimento</span><span lang="en"><span class="when">since Aug</span> MicroC compiler, in progress</span></li>
               <li><span class="tag tag--edu" lang="pt-BR">Formação</span><span class="tag tag--edu" lang="en">Education</span><span lang="pt-BR"><span class="when">out</span> Defesa do TCC: Arquitetura TRIA</span><span lang="en"><span class="when">Oct</span> Capstone defense: TRIA architecture</span></li>
               <li><span class="tag tag--edu" lang="pt-BR">Formação</span><span class="tag tag--edu" lang="en">Education</span><span lang="pt-BR"><span class="when">dez</span> Conclusão de Engenharia da Computação (prevista)</span><span lang="en"><span class="when">Dec</span> Computer Engineering degree (expected)</span></li>
             </ul>
@@ -834,7 +863,7 @@
           <div class="skill" data-reveal>
             <h3 lang="pt-BR">IA e dados</h3>
             <h3 lang="en">AI &amp; data</h3>
-            <ul class="chips"><li>Python</li><li>LLMs</li><li>RAG</li><li lang="pt-BR">Grafos de conhecimento</li><li lang="en">Knowledge graphs</li><li>RDFox</li><li>Machine Learning</li><li lang="pt-BR">Redes neurais</li><li lang="en">Neural networks</li><li>Pandas</li><li>NumPy</li><li>Jupyter</li></ul>
+            <ul class="chips"><li>Python</li><li>LLMs</li><li>RAG</li><li lang="pt-BR">Grafos de conhecimento</li><li lang="en">Knowledge graphs</li><li>RDFox</li><li>Machine Learning</li><li>Forecasting</li><li lang="pt-BR">Redes neurais</li><li lang="en">Neural networks</li><li>Pandas</li><li>NumPy</li><li>Jupyter</li></ul>
           </div>
           <div class="skill" data-reveal>
             <h3 lang="pt-BR">Back-end e APIs</h3>
