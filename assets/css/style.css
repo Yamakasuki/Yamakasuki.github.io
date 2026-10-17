@@ -414,6 +414,32 @@ body:has(.menu:popover-open) .secao .icon { rotate: 180deg; }
 }
 .flow__fork { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
 
+/* Índice dos projetos: o resultado de cada um, com link para o estudo de caso */
+.indice { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin-bottom: clamp(28px, 4vw, 44px); }
+.proj {
+  position: relative; display: flex; flex-direction: column; height: 100%;
+  padding: 1.2rem 1.2rem 1.15rem; border: 1px solid var(--line); border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--surface), rgba(20, 20, 29, 0.4));
+  color: inherit; text-decoration: none; transition: border-color .2s ease;
+}
+.proj:hover { border-color: rgba(255, 77, 94, 0.5); }
+.proj__topo { display: flex; align-items: center; justify-content: space-between; }
+.proj__num { font: 600 .74rem/1 var(--font-mono); letter-spacing: .1em; color: var(--accent); }
+.proj__seta { width: 1.05rem; height: 1.05rem; color: var(--muted); transform: rotate(90deg); transition: color .2s ease; }
+.proj:hover .proj__seta { color: var(--accent); }
+.proj__tag { margin-top: .9rem; font: 600 .7rem/1.35 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.proj__titulo { margin-top: .35rem; font: 600 1.08rem/1.25 var(--font-display); }
+.proj__dado {
+  margin-top: auto; padding-top: 1.1rem; font: 700 1.65rem/1.1 var(--font-display); letter-spacing: -0.02em;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.proj__dado small { font-size: .55em; letter-spacing: 0; }
+.proj__sub { margin-top: .35rem; color: var(--muted); font-size: .86rem; line-height: 1.45; }
+@media (prefers-reduced-motion: no-preference) {
+  .proj__seta { transition: color .2s ease, transform .2s ease; }
+  .proj:hover .proj__seta { transform: rotate(90deg) translateX(3px); }
+}
+
 /* Projetos (estudos de caso) */
 .cases { display: grid; gap: clamp(20px, 3vw, 32px); }
 .case {
@@ -537,7 +563,7 @@ code { padding: .1rem .35rem; border-radius: 6px; background: rgba(255, 255, 255
   .graph { width: min(100%, 440px); }
   .stats__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .about, .jobs, .fronts, .front--wide, .case__grid, .certs, .extras { grid-template-columns: minmax(0, 1fr); }
-  .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .skills, .indice { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 980px) {
   .nav { display: none; }
@@ -561,6 +587,13 @@ code { padding: .1rem .35rem; border-radius: 6px; background: rgba(255, 255, 255
   .front { padding: 16px 14px; }
   .case { padding: 20px 16px; }
   .skills { grid-template-columns: minmax(0, 1fr); }
+  /* Índice vira um carrossel que desliza para o lado, com o próximo cartão aparecendo na borda. */
+  .indice {
+    display: flex; gap: .75rem; overflow-x: auto; overscroll-behavior-x: contain;
+    margin-inline: -16px; padding: 4px 16px 10px; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; scrollbar-width: none;
+  }
+  .indice::-webkit-scrollbar { display: none; }
+  .indice > li { flex: 0 0 78%; scroll-snap-align: start; }
   .timeline::before, .year::after { display: none; }
   .year { grid-template-columns: minmax(0, 1fr); gap: .5rem; }
   .year__label { padding-top: 0; text-align: left; }
