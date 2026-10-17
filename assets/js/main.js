@@ -60,11 +60,18 @@ definirIdioma(root.dataset.lang === "en" ? "en" : "pt", false);
 let aparecer = null;
 if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
   aparecer = new IntersectionObserver((entradas) => {
+    let ordem = 0; // blocos que entram juntos (cartões lado a lado) aparecem em sequência
     for (const e of entradas) {
-      if (e.isIntersecting) {
-        e.target.classList.add("is-in");
-        aparecer.unobserve(e.target);
-      }
+      if (!e.isIntersecting) continue;
+      const el = e.target;
+      el.style.transitionDelay = Math.min(ordem++, 4) * 90 + "ms";
+      el.addEventListener("transitionend", function fim(ev) {
+        if (ev.target !== el) return;
+        el.style.transitionDelay = "";
+        el.removeEventListener("transitionend", fim);
+      });
+      el.classList.add("is-in");
+      aparecer.unobserve(el);
     }
   }, { rootMargin: "0px 0px -8% 0px" });
   for (const el of document.querySelectorAll("[data-reveal]")) aparecer.observe(el);
@@ -199,4 +206,13 @@ for (const a of document.querySelectorAll(".node a")) {
   a.addEventListener("focus", () => mostrarDestino(a));
   a.addEventListener("pointerleave", esconderDestino);
   a.addEventListener("blur", esconderDestino);
+}
+
+// Diagramas "como funciona": o pulso que percorre as etapas só roda com o
+// diagrama na tela e recomeça da primeira etapa cada vez que ele aparece.
+if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const vivo = new IntersectionObserver((entradas) => {
+    for (const e of entradas) e.target.classList.toggle("vivo", e.isIntersecting);
+  }, { threshold: 0.3 });
+  for (const d of document.querySelectorAll(".flow, .pipeline")) vivo.observe(d);
 }

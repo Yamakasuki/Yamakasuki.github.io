@@ -413,6 +413,26 @@ body:has(.menu:popover-open) .secao .icon { rotate: 180deg; }
   border: 6px solid transparent; border-top-color: var(--accent); border-bottom-width: 0;
 }
 .flow__fork { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+/* Na tela, um pulso de luz percorre o diagrama de cima para baixo: cada etapa
+   acende quando o pulso chega nela, mostrando o caminho do dado. */
+@keyframes pulso { 0% { background-position: 0 100%, 0 0; } 16.66%, 100% { background-position: 0 0, 0 0; } }
+@keyframes acende {
+  0% { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255, 77, 94, 0.16), 0 0 26px -6px rgba(255, 77, 94, 0.75); }
+  14%, 100% { border-color: var(--line-strong); box-shadow: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .flow > li:nth-child(2), .pipeline > li:nth-child(2) { --i: 1; }
+  .flow > li:nth-child(3), .pipeline > li:nth-child(3) { --i: 2; }
+  .flow > li:nth-child(4) { --i: 3; }
+  .flow > li:nth-child(5) { --i: 4; }
+  .flow.vivo > li:not(:last-child)::after {
+    background:
+      linear-gradient(transparent 30%, #fff 50%, transparent 70%) 0 0 / 100% 300% no-repeat,
+      linear-gradient(var(--accent), rgba(255, 77, 94, 0.35));
+    animation: pulso 3s linear calc(var(--i, 0) * .5s) infinite;
+  }
+  .flow.vivo .flow__node, .pipeline.vivo > li { animation: acende 3s ease-out calc(var(--i, 0) * .5s) infinite; }
+}
 
 /* Índice dos projetos: o resultado de cada um, com link para o estudo de caso */
 .indice { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin-bottom: clamp(28px, 4vw, 44px); }
@@ -500,6 +520,25 @@ code { padding: .1rem .35rem; border-radius: 6px; background: rgba(255, 255, 255
 .tag--edu { color: #74e6ab; background: rgba(61, 220, 132, 0.13); }
 .tag--cert { color: #ffc978; background: rgba(255, 180, 60, 0.14); }
 .tag--event { color: #cfcfdc; background: rgba(255, 255, 255, 0.08); }
+/* A linha se desenha conforme a rolagem: a ponta acompanha o meio da tela e cada
+   ano acende quando ela passa. Só onde há animação ligada à rolagem. */
+@keyframes desenha { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes marca { to { border-color: var(--accent); box-shadow: 0 0 14px rgba(255, 77, 94, 0.6); } }
+@keyframes marca-ano { to { color: var(--text); } }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .timeline { view-timeline: --trajeto block; }
+    .timeline::before { background: var(--line-strong); }
+    .timeline::after {
+      content: ""; position: absolute; top: .6rem; bottom: .6rem; left: calc(var(--ano) + var(--vao) / 2 - 1px); width: 2px;
+      background: linear-gradient(var(--accent-2), var(--accent)); box-shadow: 0 0 12px rgba(255, 77, 94, 0.7);
+      transform-origin: 50% 0; animation: desenha linear both; animation-timeline: --trajeto;
+      animation-range: cover 50vh cover calc(100% - 50vh);
+    }
+    .year::after { animation: marca linear both; animation-timeline: view(); animation-range: cover calc(50vh - 30px) cover 50vh; }
+    .year:not(.year--now) .year__label { animation: marca-ano linear both; animation-timeline: view(); animation-range: cover calc(50vh - 30px) cover 50vh; }
+  }
+}
 
 /* Certificados */
 .certs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
@@ -550,6 +589,13 @@ code { padding: .1rem .35rem; border-radius: 6px; background: rgba(255, 255, 255
 /* Aparecer ao rolar (só com JS e sem preferência por menos movimento) */
 .reveal [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
 .reveal [data-reveal].is-in { opacity: 1; transform: none; }
+/* No índice, os cartões entram um depois do outro. */
+.reveal .indice[data-reveal] { opacity: 1; transform: none; }
+.reveal .indice > li { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+.reveal .indice.is-in > li { opacity: 1; transform: none; }
+.reveal .indice > li:nth-child(2) { transition-delay: 90ms; }
+.reveal .indice > li:nth-child(3) { transition-delay: 180ms; }
+.reveal .indice > li:nth-child(4) { transition-delay: 270ms; }
 
 /* ---------- Rodapé ---------- */
 .footer { border-top: 1px solid var(--line); padding-block: 28px; color: var(--muted); font-size: .9rem; }
@@ -594,7 +640,7 @@ code { padding: .1rem .35rem; border-radius: 6px; background: rgba(255, 255, 255
   }
   .indice::-webkit-scrollbar { display: none; }
   .indice > li { flex: 0 0 78%; scroll-snap-align: start; }
-  .timeline::before, .year::after { display: none; }
+  .timeline::before, .timeline::after, .year::after { display: none; }
   .year { grid-template-columns: minmax(0, 1fr); gap: .5rem; }
   .year__label { padding-top: 0; text-align: left; }
   .year__items { padding: .9rem 1rem; }
