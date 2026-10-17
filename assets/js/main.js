@@ -30,8 +30,29 @@ function definirIdioma(lang, salvar) {
   }
 }
 
+// Troca o idioma sem perder o ponto de leitura: os textos mudam de altura, então
+// o trecho que estava logo abaixo do topo é recolocado no mesmo lugar.
+function trocarIdioma(lang) {
+  if (lang === root.dataset.lang) return;
+  const y = document.querySelector(".topbar").getBoundingClientRect().bottom + 8;
+  const ponto = document.elementFromPoint(innerWidth / 2, y);
+  const trecho = ponto && !ponto.matches("html, body, main") ? ponto.closest("[lang]:not(html)") || ponto : null;
+  const antes = trecho && trecho.getBoundingClientRect();
+  root.style.overflowAnchor = "none";
+  definirIdioma(lang, true);
+  if (trecho && antes.height) {
+    const fracao = (y - antes.top) / antes.height;
+    const origem = trecho.getAttribute("lang");
+    const par = origem === "pt-BR" ? trecho.nextElementSibling : origem === "en" ? trecho.previousElementSibling : trecho;
+    const depois = par.getBoundingClientRect();
+    scrollBy(0, depois.top + fracao * depois.height - y);
+  }
+  requestAnimationFrame(() => { root.style.overflowAnchor = ""; });
+  moverIndicador(); // os nomes do menu mudam de largura
+}
+
 for (const b of document.querySelectorAll("[data-set-lang]")) {
-  b.addEventListener("click", () => definirIdioma(b.dataset.setLang, true));
+  b.addEventListener("click", () => trocarIdioma(b.dataset.setLang));
 }
 definirIdioma(root.dataset.lang === "en" ? "en" : "pt", false);
 
@@ -49,20 +70,75 @@ if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: re
   root.classList.add("reveal");
 }
 
-// Destaca no menu a seção que está no meio da tela.
-const links = [...document.querySelectorAll(".nav a")];
-if ("IntersectionObserver" in window) {
-  const menu = new IntersectionObserver((entradas) => {
-    for (const e of entradas) {
-      if (!e.isIntersecting) continue;
-      for (const a of links) {
-        if (a.getAttribute("href") === "#" + e.target.id) a.setAttribute("aria-current", "true");
-        else a.removeAttribute("aria-current");
-      }
-    }
-  }, { rootMargin: "-45% 0px -50% 0px" });
-  for (const a of links) {
-    const alvo = document.querySelector(a.getAttribute("href"));
-    if (alvo) menu.observe(alvo);
+// Seção atual (a que cruza o meio da tela): marca o link no menu, desliza o
+// indicador até ele e, no celular, mostra o nome da seção no botão do menu.
+const nav = document.querySelector(".nav");
+const indicador = nav.querySelector(".nav__ind");
+const menu = document.getElementById("menu");
+const botaoMenu = document.querySelector(".secao");
+const rotulo = botaoMenu.querySelector(".secao__atual");
+const linksSecao = [...document.querySelectorAll(".nav a, .menu__lista a")];
+let secaoAtual = null;
+
+function moverIndicador() {
+  const a = nav.querySelector('a[aria-current="true"]');
+  if (!a || !a.offsetWidth) { nav.classList.remove("tem-ind"); return; }
+  const surgindo = !nav.classList.contains("tem-ind"); // aparece no lugar, sem deslizar
+  if (surgindo) indicador.style.transition = "none";
+  nav.style.setProperty("--ind-x", a.offsetLeft + "px");
+  nav.style.setProperty("--ind-w", a.offsetWidth + "px");
+  nav.classList.add("tem-ind");
+  if (surgindo) { void indicador.offsetWidth; indicador.style.transition = ""; }
+}
+
+function marcarSecao(id) {
+  const primeira = secaoAtual === null;
+  secaoAtual = id;
+  for (const a of linksSecao) {
+    if (a.getAttribute("href") === "#" + id) a.setAttribute("aria-current", "true");
+    else a.removeAttribute("aria-current");
   }
+  moverIndicador();
+  const item = menu.querySelector(`.menu__lista a[href="#${id}"]`);
+  rotulo.replaceChildren(...(item ? [...item.querySelectorAll("[lang]")].map((s) => s.cloneNode(true)) : ["Menu"]));
+  if (primeira) return;
+  rotulo.classList.remove("troca");
+  void rotulo.offsetWidth; // reinicia a animação da troca de nome
+  rotulo.classList.add("troca");
+}
+
+if ("IntersectionObserver" in window) {
+  const observador = new IntersectionObserver((entradas) => {
+    for (const e of entradas) if (e.isIntersecting && e.target.id !== secaoAtual) marcarSecao(e.target.id);
+  }, { rootMargin: "-45% 0px -50% 0px" });
+  for (const s of document.querySelectorAll("main > section[id]")) observador.observe(s);
+}
+if ("ResizeObserver" in window) new ResizeObserver(moverIndicador).observe(nav);
+
+// Menu do celular: fecha ao escolher uma seção. Sem a API de popover, abre por classe.
+const temPopover = "popover" in HTMLElement.prototype;
+function fecharMenu() {
+  if (temPopover) menu.hidePopover();
+  else { menu.classList.remove("aberto"); botaoMenu.setAttribute("aria-expanded", "false"); }
+}
+menu.addEventListener("click", (e) => { if (e.target.closest("a")) fecharMenu(); });
+if (!temPopover) {
+  botaoMenu.setAttribute("aria-expanded", "false");
+  botaoMenu.addEventListener("click", () => {
+    botaoMenu.setAttribute("aria-expanded", String(menu.classList.toggle("aberto")));
+  });
+  document.addEventListener("click", (e) => { if (!e.target.closest(".menu, .secao")) fecharMenu(); });
+}
+
+// Barra de progresso: o CSS cuida dela onde há animação ligada à rolagem; aqui, o reserva.
+if (!CSS.supports("animation-timeline: scroll()")) {
+  const barra = document.querySelector(".progresso");
+  let agendado = false;
+  const medir = () => {
+    agendado = false;
+    const max = document.documentElement.scrollHeight - innerHeight;
+    barra.style.setProperty("--progresso", max > 0 ? Math.min(1, scrollY / max) : 0);
+  };
+  addEventListener("scroll", () => { if (!agendado) { agendado = true; requestAnimationFrame(medir); } }, { passive: true });
+  medir();
 }

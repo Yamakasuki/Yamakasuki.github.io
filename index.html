@@ -79,6 +79,7 @@
     <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6"/></symbol>
     <symbol id="i-out" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M8 7h9v9"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></symbol>
   </svg>
 
   <a class="skip" href="#conteudo"><span lang="pt-BR">Pular para o conteúdo</span><span lang="en">Skip to content</span></a>
@@ -90,18 +91,45 @@
         <span class="brand__name">Gabriel Yamamoto</span>
       </a>
       <nav class="nav" aria-label="Seções" data-en-aria-label="Sections">
+        <span class="nav__ind" aria-hidden="true"></span>
         <a href="#experiencia"><span lang="pt-BR">Experiência</span><span lang="en">Experience</span></a>
         <a href="#projetos"><span lang="pt-BR">Projetos</span><span lang="en">Projects</span></a>
         <a href="#trajetoria"><span lang="pt-BR">Trajetória</span><span lang="en">Journey</span></a>
         <a href="#certificados"><span lang="pt-BR">Certificados</span><span lang="en">Certificates</span></a>
         <a href="#contato"><span lang="pt-BR">Contato</span><span lang="en">Contact</span></a>
       </nav>
+      <!-- No celular, o menu vira um botão com o nome da seção em que a pessoa está. -->
+      <button class="secao" type="button" popovertarget="menu">
+        <span class="sr" lang="pt-BR">Abrir o menu. Seção atual:</span><span class="sr" lang="en">Open the menu. Current section:</span>
+        <span class="secao__atual">Menu</span>
+        <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg>
+      </button>
       <div class="lang" role="group" aria-label="Idioma" data-en-aria-label="Language">
         <button type="button" data-set-lang="pt" aria-pressed="true" title="Português">PT</button>
         <button type="button" data-set-lang="en" aria-pressed="false" title="English">EN</button>
       </div>
     </div>
+    <div class="progresso" aria-hidden="true"></div>
   </header>
+
+  <div id="menu" class="menu" popover>
+    <nav aria-label="Todas as seções" data-en-aria-label="All sections">
+      <ol class="menu__lista">
+        <li><a href="#sobre"><span class="menu__num">01</span><span lang="pt-BR">Sobre mim</span><span lang="en">About me</span></a></li>
+        <li><a href="#experiencia"><span class="menu__num">02</span><span lang="pt-BR">Experiência</span><span lang="en">Experience</span></a></li>
+        <li><a href="#projetos"><span class="menu__num">03</span><span lang="pt-BR">Projetos</span><span lang="en">Projects</span></a></li>
+        <li><a href="#trajetoria"><span class="menu__num">04</span><span lang="pt-BR">Trajetória</span><span lang="en">Journey</span></a></li>
+        <li><a href="#certificados"><span class="menu__num">05</span><span lang="pt-BR">Certificados</span><span lang="en">Certificates</span></a></li>
+        <li><a href="#competencias"><span class="menu__num">06</span><span lang="pt-BR">Competências</span><span lang="en">Skills</span></a></li>
+        <li><a href="#contato"><span class="menu__num">07</span><span lang="pt-BR">Contato</span><span lang="en">Contact</span></a></li>
+      </ol>
+    </nav>
+    <ul class="socials menu__social">
+      <li><a href="mailto:gabriel.yamamoto505@gmail.com" aria-label="E-mail"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg></a></li>
+      <li><a href="https://www.linkedin.com/in/gabriel-yamamoto-068552252" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a></li>
+      <li><a href="https://github.com/Yamakasuki" target="_blank" rel="noopener" aria-label="GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a></li>
+    </ul>
+  </div>
 
   <main id="conteudo">
     <section id="inicio" class="hero">
