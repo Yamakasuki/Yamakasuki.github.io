@@ -23,10 +23,10 @@ Sem framework e sem etapa de build: o GitHub Pages serve os arquivos como estão
 - **Menu que acompanha a leitura:** no desktop, um destaque desliza até a seção
   atual; no celular, o topo mostra o nome da seção num botão que abre a lista
   de seções. Uma barra fina no topo mostra quanto já foi lido.
-- **Toda afirmação leva à prova:** as áreas do grafo da abertura, os números e
-  o índice de projetos são links para o trecho que os comprova. O cartão de
-  destino acende ao chegar. Para mudar um destino, troque o `href` pelo `id` do
-  cartão (`#frente-…`, `#projeto-…`, `#samsung`, `#ic`).
+- **Toda afirmação leva à prova:** as áreas do grafo da abertura e o índice de
+  projetos são links para o trecho que os comprova. O cartão de destino acende
+  ao chegar. Para mudar um destino, troque o `href` pelo `id` do cartão
+  (`#frente-…`, `#projeto-…`, `#samsung`, `#ic`).
 - **Diagramas vivos:** um pulso de luz percorre as etapas de cada diagrama, e a
   linha da trajetória se desenha conforme a rolagem.
 - **Copiar e-mail:** os botões de copiar confirmam com um aviso, porque muitos

@@ -171,7 +171,7 @@ if (!CSS.supports("animation-timeline: scroll()")) {
   medir();
 }
 
-// Ao seguir um link interno até um cartão (área do grafo, número, índice), o
+// Ao seguir um link interno até um cartão (área do grafo ou índice), o
 // cartão acende por um instante quando a rolagem termina.
 function destacar(alvo) {
   if (!alvo || alvo.matches("section, main")) return;
@@ -266,7 +266,7 @@ if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
     cartao.style.setProperty("--my", y - r.top + "px");
   };
   document.addEventListener("pointermove", (e) => {
-    cartao = e.target.closest(".stat, .proj, .front, .cert, .skill");
+    cartao = e.target.closest(".proj, .front, .cert, .skill");
     x = e.clientX; y = e.clientY;
     if (cartao && !agendado) { agendado = true; requestAnimationFrame(mover); }
   }, { passive: true });
