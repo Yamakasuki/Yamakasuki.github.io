@@ -11,12 +11,30 @@ Computação na PUC-Campinas.
 ```text
 index.html            conteúdo do site (página única)
 assets/css/style.css  visual: tema escuro e layout responsivo
-assets/js/main.js     troca PT/EN, blocos que aparecem ao rolar e menu ativo
+assets/js/main.js     troca PT/EN, menu, links para a prova, copiar e-mail e animações
 assets/img/           foto, print do dashboard IoT, ícone e imagem de prévia (og.png)
 scripts/check.py      verificação antes de publicar
 ```
 
 Sem framework e sem etapa de build: o GitHub Pages serve os arquivos como estão.
+
+## Como a página guia a leitura
+
+- **Menu que acompanha a leitura:** no desktop, um destaque desliza até a seção
+  atual; no celular, o topo mostra o nome da seção num botão que abre a lista
+  de seções. Uma barra fina no topo mostra quanto já foi lido.
+- **Toda afirmação leva à prova:** as áreas do grafo da abertura, os números e
+  o índice de projetos são links para o trecho que os comprova. O cartão de
+  destino acende ao chegar. Para mudar um destino, troque o `href` pelo `id` do
+  cartão (`#frente-…`, `#projeto-…`, `#samsung`, `#ic`).
+- **Diagramas vivos:** um pulso de luz percorre as etapas de cada diagrama, e a
+  linha da trajetória se desenha conforme a rolagem.
+- **Copiar e-mail:** os botões de copiar confirmam com um aviso, porque muitos
+  computadores de empresa não abrem links `mailto:`.
+
+Movimento só para quem não pediu menos movimento: deslocamentos e animações
+contínuas ficam em blocos `@media (prefers-reduced-motion: no-preference)` no
+CSS. Mudanças de cor valem para todos.
 
 ## Como editar
 

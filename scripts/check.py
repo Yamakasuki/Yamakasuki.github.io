@@ -1,6 +1,6 @@
 """Confere o index.html antes de publicar.
 
-    python scripts/check.py           pares PT/EN, ids, ancoras, imagens e arquivos locais
+    python scripts/check.py           pares PT/EN, ids, ancoras, popovers, imagens e arquivos locais
     python scripts/check.py --links   tambem abre cada link externo
 
 Regra dos idiomas: todo elemento com lang="pt-BR" precisa ter, logo em seguida,
@@ -73,6 +73,8 @@ def checar_estrutura(nos, erros):
         href = no.attrs.get("href") or ""
         if no.tag == "a" and href.startswith("#") and len(href) > 1 and href[1:] not in ids:
             erros.append(f"linha {no.linha}: ancora {href} nao existe")
+        if "popovertarget" in no.attrs and no.attrs["popovertarget"] not in ids:
+            erros.append(f"linha {no.linha}: popovertarget '{no.attrs['popovertarget']}' nao existe")
         if no.tag == "img" and "alt" not in no.attrs:
             erros.append(f"linha {no.linha}: <img> sem alt")
         if no.tag == "a" and no.attrs.get("target") == "_blank" and "noopener" not in (no.attrs.get("rel") or ""):
