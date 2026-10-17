@@ -177,44 +177,54 @@
             <div class="graph__photo">
               <img src="assets/img/gabriel.jpg" width="400" height="400" alt="Foto de Gabriel Hideki Yamamoto" data-en-alt="Photo of Gabriel Hideki Yamamoto">
             </div>
+            <!-- Cada área leva ao trecho do site que a comprova. -->
             <ul class="graph__nodes" aria-label="Áreas em que atuo" data-en-aria-label="Areas I work in">
-              <li class="node" style="--x:50%; --y:12%; --d:0s"><span lang="pt-BR">Grafos de conhecimento</span><span lang="en">Knowledge graphs</span></li>
-              <li class="node" style="--x:75.5%; --y:23.1%; --d:-1s"><span lang="pt-BR">IA &amp; LLMs</span><span lang="en">AI &amp; LLMs</span></li>
-              <li class="node" style="--x:86%; --y:50%; --d:-2s"><span lang="pt-BR">Automação</span><span lang="en">Automation</span></li>
-              <li class="node" style="--x:75.5%; --y:76.9%; --d:-3s">Docker &amp; CI</li>
-              <li class="node" style="--x:50%; --y:88%; --d:-4s"><span lang="pt-BR">Segurança de agentes</span><span lang="en">Agent security</span></li>
-              <li class="node" style="--x:24.5%; --y:76.9%; --d:-5s"><span lang="pt-BR">Compiladores</span><span lang="en">Compilers</span></li>
-              <li class="node" style="--x:14%; --y:50%; --d:-1.5s">IoT &amp; ESP32</li>
-              <li class="node" style="--x:24.5%; --y:23.1%; --d:-2.5s"><span lang="pt-BR">APIs em Python</span><span lang="en">Python APIs</span></li>
+              <li class="node" style="--x:50%; --y:12%; --d:0s"><a href="#frente-grafo"><span lang="pt-BR">Grafos de conhecimento</span><span lang="en">Knowledge graphs</span></a></li>
+              <li class="node" style="--x:75.5%; --y:23.1%; --d:-1s"><a href="#samsung"><span lang="pt-BR">IA &amp; LLMs</span><span lang="en">AI &amp; LLMs</span></a></li>
+              <li class="node" style="--x:86%; --y:50%; --d:-2s"><a href="#frente-automacao"><span lang="pt-BR">Automação</span><span lang="en">Automation</span></a></li>
+              <li class="node" style="--x:75.5%; --y:76.9%; --d:-3s"><a href="#projeto-conteineres">Docker &amp; CI</a></li>
+              <li class="node" style="--x:50%; --y:88%; --d:-4s"><a href="#projeto-tria"><span lang="pt-BR">Segurança de agentes</span><span lang="en">Agent security</span></a></li>
+              <li class="node" style="--x:24.5%; --y:76.9%; --d:-5s"><a href="#projeto-microc"><span lang="pt-BR">Compiladores</span><span lang="en">Compilers</span></a></li>
+              <li class="node" style="--x:14%; --y:50%; --d:-1.5s"><a href="#projeto-iot">IoT &amp; ESP32</a></li>
+              <li class="node" style="--x:24.5%; --y:23.1%; --d:-2.5s"><a href="#frente-grafo"><span lang="pt-BR">APIs em Python</span><span lang="en">Python APIs</span></a></li>
             </ul>
           </div>
+          <p class="graph__dica">
+            <span class="graph__padrao"><span lang="pt-BR">Escolha uma área para ver onde eu a apliquei</span><span lang="en">Pick an area to see where I applied it</span></span>
+            <span class="graph__destino" aria-hidden="true"></span>
+          </p>
         </div>
       </div>
     </section>
 
     <section class="stats" aria-label="Destaques em números" data-en-aria-label="Highlights in numbers">
+      <!-- Cada número leva à prova. -->
       <div class="container stats__grid">
-        <div class="stat">
+        <a class="stat" href="#frente-automacao">
           <p class="stat__value">+300%</p>
           <p class="stat__label" lang="pt-BR">de eficiência no time com uma automação em Python que criei na Samsung</p>
           <p class="stat__label" lang="en">team efficiency gain from a Python automation I built at Samsung</p>
-        </div>
-        <div class="stat">
+          <span class="stat__ir"><span lang="pt-BR">Ver como eu fiz</span><span lang="en">See how I did it</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
+        <a class="stat" href="#samsung">
           <p class="stat__value" lang="pt-BR">Desde 2025</p>
           <p class="stat__value" lang="en">Since 2025</p>
           <p class="stat__label" lang="pt-BR">na Samsung Research Brasil, criando IA para a área de saúde</p>
           <p class="stat__label" lang="en">at Samsung Research Brazil, building AI for health</p>
-        </div>
-        <div class="stat">
+          <span class="stat__ir"><span lang="pt-BR">Ver a experiência</span><span lang="en">See the experience</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
+        <a class="stat" href="#certificados">
           <p class="stat__value">3</p>
           <p class="stat__label" lang="pt-BR">certificações internacionais: Machine Learning, Python e IA aplicada</p>
           <p class="stat__label" lang="en">international certifications: Machine Learning, Python and applied AI</p>
-        </div>
-        <div class="stat">
+          <span class="stat__ir"><span lang="pt-BR">Verificar certificados</span><span lang="en">Verify certificates</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
+        <a class="stat" href="#ic">
           <p class="stat__value">1</p>
           <p class="stat__label" lang="pt-BR">artigo científico como coautor (CBEB 2024)</p>
           <p class="stat__label" lang="en">scientific paper as co-author (CBEB 2024)</p>
-        </div>
+          <span class="stat__ir"><span lang="pt-BR">Ver a pesquisa</span><span lang="en">See the research</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
       </div>
     </section>
     <!-- ===================== SOBRE ===================== -->
@@ -268,7 +278,7 @@
           <h2 lang="en">Where I put it into practice</h2>
         </header>
 
-        <article class="job job--main" data-reveal>
+        <article id="samsung" class="job job--main" data-reveal>
           <header class="job__head">
             <div>
               <h3>Samsung Research Brasil (SRBR)</h3>
@@ -282,7 +292,7 @@
           <p class="job__intro" lang="en">I'm part of the Health Insight team in the AI area, focused on personalized recommendations and analyses for users. My work spans five fronts:</p>
 
           <div class="fronts">
-            <article class="front front--wide">
+            <article id="frente-grafo" class="front front--wide">
               <div class="front__body">
                 <p class="front__num">01</p>
                 <h4 lang="pt-BR">API do grafo de conhecimento</h4>
@@ -321,7 +331,7 @@
               </div>
             </article>
 
-            <article class="front">
+            <article id="frente-automacao" class="front">
               <p class="front__num">02</p>
               <h4 lang="pt-BR">Automação de ensaios clínicos</h4>
               <h4 lang="en">Clinical-trial device automation</h4>
@@ -334,7 +344,7 @@
               <ul class="chips"><li>Python</li><li>uiautomator2</li><li>Android</li><li>Bluetooth</li><li lang="pt-BR">Automação de testes</li><li lang="en">Test automation</li></ul>
             </article>
 
-            <article class="front">
+            <article id="frente-android" class="front">
               <p class="front__num">03</p>
               <h4 lang="pt-BR">Android SDK e Samsung Health</h4>
               <h4 lang="en">Android SDK and Samsung Health</h4>
@@ -345,7 +355,7 @@
               <ul class="chips"><li>Android SDK</li><li>Samsung Health</li><li>One UI</li></ul>
             </article>
 
-            <article class="front">
+            <article id="frente-pocs" class="front">
               <p class="front__num">04</p>
               <h4 lang="pt-BR">Provas de conceito (POCs)</h4>
               <h4 lang="en">Proofs of concept (POCs)</h4>
@@ -356,7 +366,7 @@
               <ul class="chips"><li>Web</li><li>POC</li><li>Android</li></ul>
             </article>
 
-            <article class="front">
+            <article id="frente-chatbot" class="front">
               <p class="front__num">05</p>
               <h4 lang="pt-BR">PMO do SRBR ChatBot</h4>
               <h4 lang="en">PMO for SRBR ChatBot</h4>
@@ -370,7 +380,7 @@
         </article>
 
         <div class="jobs">
-          <article class="job" data-reveal>
+          <article id="ic" class="job" data-reveal>
             <header class="job__head">
               <div>
                 <h3 lang="pt-BR">PUC-Campinas — Laboratório LISI</h3>
@@ -401,7 +411,7 @@
             <a class="link" href="http://lattes.cnpq.br/6953741854576468" target="_blank" rel="noopener"><span lang="pt-BR">Ver currículo Lattes</span><span lang="en">See Lattes CV</span><svg class="icon" aria-hidden="true"><use href="#i-out"/></svg></a>
           </article>
 
-          <article class="job" data-reveal>
+          <article id="monitoria" class="job" data-reveal>
             <header class="job__head">
               <div>
                 <h3>PUC-Campinas</h3>
@@ -433,7 +443,7 @@
 
         <div class="cases">
           <!-- TCC -->
-          <article class="case" data-reveal>
+          <article id="projeto-tria" class="case" data-reveal>
             <header class="case__head">
               <p class="case__tag" lang="pt-BR">TCC · Engenharia da Computação · 2026</p>
               <p class="case__tag" lang="en">Capstone project · Computer Engineering · 2026</p>
@@ -483,7 +493,7 @@
           </article>
 
           <!-- IoT -->
-          <article class="case" data-reveal>
+          <article id="projeto-iot" class="case" data-reveal>
             <header class="case__head">
               <p class="case__tag" lang="pt-BR">IoT · projeto em equipe (4 pessoas) · 2026</p>
               <p class="case__tag" lang="en">IoT · team project (4 people) · 2026</p>
@@ -534,7 +544,7 @@
           </article>
 
           <!-- Compilador -->
-          <article class="case" data-reveal>
+          <article id="projeto-microc" class="case" data-reveal>
             <header class="case__head">
               <p class="case__tag" lang="pt-BR">Compiladores · PUC-Campinas · 2026</p>
               <p class="case__tag" lang="en">Compilers · PUC-Campinas · 2026</p>
@@ -587,7 +597,7 @@
           </article>
 
           <!-- Contêineres -->
-          <article class="case" data-reveal>
+          <article id="projeto-conteineres" class="case" data-reveal>
             <header class="case__head">
               <p class="case__tag">Cloud · DevOps · 2025</p>
               <h3 lang="pt-BR">API de Machine Learning em contêineres</h3>

@@ -228,7 +228,7 @@ body:has(.menu:popover-open) .secao .icon { rotate: 180deg; }
 }
 
 /* ---------- Grafo das áreas ---------- */
-.hero__visual { display: flex; justify-content: center; }
+.hero__visual { display: flex; flex-direction: column; align-items: center; gap: .6rem; }
 .graph { position: relative; width: min(100%, 470px); aspect-ratio: 1; }
 .graph__edges { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .graph__edges .ring { fill: none; stroke: var(--line-strong); stroke-width: 1; vector-effect: non-scaling-stroke; }
@@ -254,10 +254,31 @@ body:has(.menu:popover-open) .secao .icon { rotate: 180deg; }
   background: var(--surface); border: 1px solid var(--line-strong);
   box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.9);
   transform: translate(-50%, -50%);
-  transition: border-color .2s ease, box-shadow .2s ease;
+  transition: border-color .2s ease, box-shadow .2s ease, opacity .2s ease;
 }
 .node::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
-.node:hover { border-color: var(--accent); box-shadow: 0 0 24px -6px rgba(255, 77, 94, 0.7); }
+.node:hover, .node:focus-within { border-color: var(--accent); box-shadow: 0 0 24px -6px rgba(255, 77, 94, 0.7); }
+/* Cada área é um link para a prova: ao apontar, a ligação dela acende e as outras recuam. */
+.node a { color: inherit; text-decoration: none; }
+.node a::after { content: ""; position: absolute; inset: -6px; border-radius: 999px; } /* área de clique maior */
+.node a:focus-visible { outline: none; }
+.node:has(a:focus-visible) { outline: 2px solid var(--accent); outline-offset: 3px; }
+.graph:is(:hover, :focus-within) .node { animation-play-state: paused; }
+.graph:has(.node:is(:hover, :focus-within)) .node:not(:hover, :focus-within) { opacity: .45; }
+.graph__edges .spoke { transition: opacity .2s ease, stroke-width .2s ease; }
+.graph:has(.node:is(:hover, :focus-within)) .spoke { opacity: .2; }
+.graph:has(.node:nth-child(1):is(:hover, :focus-within)) .spoke:nth-of-type(1),
+.graph:has(.node:nth-child(2):is(:hover, :focus-within)) .spoke:nth-of-type(2),
+.graph:has(.node:nth-child(3):is(:hover, :focus-within)) .spoke:nth-of-type(3),
+.graph:has(.node:nth-child(4):is(:hover, :focus-within)) .spoke:nth-of-type(4),
+.graph:has(.node:nth-child(5):is(:hover, :focus-within)) .spoke:nth-of-type(5),
+.graph:has(.node:nth-child(6):is(:hover, :focus-within)) .spoke:nth-of-type(6),
+.graph:has(.node:nth-child(7):is(:hover, :focus-within)) .spoke:nth-of-type(7),
+.graph:has(.node:nth-child(8):is(:hover, :focus-within)) .spoke:nth-of-type(8) { opacity: 1; stroke: var(--accent-2); stroke-width: 2.6; }
+.graph__dica { min-height: 1.5em; text-align: center; color: var(--muted); font-size: .88rem; }
+.graph__destino { display: none; color: var(--text); font-weight: 600; }
+.graph__dica.tem-destino .graph__padrao { display: none; }
+.graph__dica.tem-destino .graph__destino { display: inline; }
 @keyframes flutua {
   0%, 100% { transform: translate(-50%, -50%); }
   50% { transform: translate(-50%, calc(-50% - 6px)); }
@@ -272,8 +293,17 @@ body:has(.menu:popover-open) .secao .icon { rotate: 180deg; }
 .stats { padding-bottom: clamp(48px, 8vw, 96px); }
 .stats__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
 .stat {
+  display: flex; flex-direction: column;
   padding: 1.4rem 1.3rem; border: 1px solid var(--line); border-radius: var(--radius);
   background: linear-gradient(180deg, var(--surface), rgba(20, 20, 29, 0.4));
+  color: inherit; text-decoration: none; transition: border-color .2s ease;
+}
+.stat:hover { border-color: rgba(255, 77, 94, 0.5); }
+.stat__ir { display: inline-flex; align-items: center; gap: .4rem; margin-top: auto; padding-top: 1rem; color: var(--accent); font-size: .88rem; font-weight: 600; }
+.stat__ir .icon { width: 1em; height: 1em; }
+@media (prefers-reduced-motion: no-preference) {
+  .stat__ir .icon { transition: transform .2s ease; }
+  .stat:hover .stat__ir .icon { transform: translateX(3px); }
 }
 .stat__value {
   font: 700 clamp(1.9rem, 3.4vw, 2.5rem)/1.1 var(--font-display); letter-spacing: -0.02em;
@@ -484,6 +514,12 @@ code { padding: .1rem .35rem; border-radius: 6px; background: rgba(255, 255, 255
 .contact__text { max-width: 38rem; margin: 1rem auto 0; color: var(--muted); font-size: 1.08rem; }
 .contact__cta { justify-content: center; }
 .contact__cta .btn { max-width: 100%; overflow-wrap: anywhere; } /* o e-mail quebra em telas estreitas */
+
+/* Chegada: o cartão de destino de um link interno acende por um instante (só cor). */
+@keyframes chegada {
+  0%, 30% { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255, 77, 94, 0.3), 0 0 60px -12px rgba(255, 77, 94, 0.6); }
+}
+.chegou { animation: chegada 2.4s ease-out; }
 
 /* Aparecer ao rolar (só com JS e sem preferência por menos movimento) */
 .reveal [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }

@@ -57,8 +57,9 @@ for (const b of document.querySelectorAll("[data-set-lang]")) {
 definirIdioma(root.dataset.lang === "en" ? "en" : "pt", false);
 
 // Blocos aparecem ao entrar na tela (desligado para quem prefere menos movimento).
+let aparecer = null;
 if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  const aparecer = new IntersectionObserver((entradas) => {
+  aparecer = new IntersectionObserver((entradas) => {
     for (const e of entradas) {
       if (e.isIntersecting) {
         e.target.classList.add("is-in");
@@ -67,7 +68,22 @@ if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: re
     }
   }, { rootMargin: "0px 0px -8% 0px" });
   for (const el of document.querySelectorAll("[data-reveal]")) aparecer.observe(el);
+  if (location.hash.length > 1) revelarJa(document.getElementById(decodeURIComponent(location.hash.slice(1))));
   root.classList.add("reveal");
+}
+
+// Mostra na hora o bloco de destino de um link interno. Ainda escondido, ele está
+// 18 px abaixo do lugar, e a rolagem até a âncora pararia fora do ponto.
+function revelarJa(alvo) {
+  if (!aparecer || !alvo) return;
+  const blocos = [];
+  for (let el = alvo.closest("[data-reveal]"); el; el = el.parentElement?.closest("[data-reveal]")) {
+    if (!el.classList.contains("is-in")) blocos.push(el);
+  }
+  for (const el of blocos) { el.style.transition = "none"; el.classList.add("is-in"); aparecer.unobserve(el); }
+  if (!blocos.length) return;
+  void alvo.offsetWidth;
+  for (const el of blocos) el.style.transition = "";
 }
 
 // Seção atual (a que cruza o meio da tela): marca o link no menu, desliza o
@@ -141,4 +157,46 @@ if (!CSS.supports("animation-timeline: scroll()")) {
   };
   addEventListener("scroll", () => { if (!agendado) { agendado = true; requestAnimationFrame(medir); } }, { passive: true });
   medir();
+}
+
+// Ao seguir um link interno até um cartão (área do grafo, número, índice), o
+// cartão acende por um instante quando a rolagem termina.
+function destacar(alvo) {
+  if (!alvo || alvo.matches("section, main")) return;
+  alvo.classList.remove("chegou");
+  void alvo.offsetWidth; // reinicia a animação se o mesmo cartão for escolhido de novo
+  alvo.classList.add("chegou");
+}
+function destacarAoChegar(alvo) {
+  let feito = false;
+  const fim = () => { if (!feito) { feito = true; destacar(alvo); } };
+  addEventListener("scrollend", fim, { once: true });
+  setTimeout(fim, 1200); // sem scrollend, ou quando o cartão já estava na tela
+}
+document.addEventListener("click", (e) => {
+  const a = e.target.closest('a[href^="#"]');
+  const alvo = a && a.hash.length > 1 && document.getElementById(decodeURIComponent(a.hash.slice(1)));
+  if (!alvo) return;
+  revelarJa(alvo); // antes de o navegador calcular a rolagem
+  destacarAoChegar(alvo);
+});
+addEventListener("animationend", (e) => { if (e.animationName === "chegada") e.target.classList.remove("chegou"); });
+if (location.hash.length > 1) destacarAoChegar(document.getElementById(decodeURIComponent(location.hash.slice(1))));
+
+// Grafo da abertura: ao apontar para uma área, a legenda diz para onde ela leva.
+const dica = document.querySelector(".graph__dica");
+const destino = dica.querySelector(".graph__destino");
+function mostrarDestino(a) {
+  const alvo = document.getElementById(a.hash.slice(1));
+  const titulo = alvo && [...alvo.querySelectorAll("h3, h4")].find((h) => !h.lang || h.lang === root.lang);
+  if (!titulo) return;
+  destino.textContent = "→ " + titulo.textContent.trim();
+  dica.classList.add("tem-destino");
+}
+const esconderDestino = () => dica.classList.remove("tem-destino");
+for (const a of document.querySelectorAll(".node a")) {
+  a.addEventListener("pointerenter", () => mostrarDestino(a));
+  a.addEventListener("focus", () => mostrarDestino(a));
+  a.addEventListener("pointerleave", esconderDestino);
+  a.addEventListener("blur", esconderDestino);
 }
