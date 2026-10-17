@@ -80,6 +80,7 @@
     <symbol id="i-out" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M8 7h9v9"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M20 6 9 17l-5-5"/></symbol>
     <symbol id="i-chevron" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></g></symbol>
   </svg>
 
   <a class="skip" href="#conteudo"><span lang="pt-BR">Pular para o conteúdo</span><span lang="en">Skip to content</span></a>
@@ -151,6 +152,7 @@
           <div class="cta">
             <a class="btn btn--primary" href="#projetos"><span lang="pt-BR">Ver projetos</span><span lang="en">See projects</span><svg class="icon icon--arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
             <a class="btn btn--ghost" href="mailto:gabriel.yamamoto505@gmail.com"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><span lang="pt-BR">Falar comigo</span><span lang="en">Get in touch</span></a>
+            <button class="btn btn--ghost btn--icon" type="button" data-copiar="gabriel.yamamoto505@gmail.com" aria-label="Copiar e-mail" data-en-aria-label="Copy email" title="Copiar e-mail" data-en-title="Copy email"><svg class="icon icone-copiar" aria-hidden="true"><use href="#i-copy"/></svg><svg class="icon icone-ok" aria-hidden="true"><use href="#i-check"/></svg></button>
           </div>
           <ul class="socials">
             <li><a href="https://www.linkedin.com/in/gabriel-yamamoto-068552252" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a></li>
@@ -878,6 +880,7 @@
           <p class="contact__text" lang="en">I'm open to opportunities in AI, Python back-end and software for hardware and IoT. The fastest way to reach me is by email or on LinkedIn.</p>
           <div class="cta contact__cta">
             <a class="btn btn--primary" href="mailto:gabriel.yamamoto505@gmail.com"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>gabriel.yamamoto505@gmail.com</a>
+            <button class="btn btn--ghost" type="button" data-copiar="gabriel.yamamoto505@gmail.com"><svg class="icon icone-copiar" aria-hidden="true"><use href="#i-copy"/></svg><svg class="icon icone-ok" aria-hidden="true"><use href="#i-check"/></svg><span lang="pt-BR">Copiar e-mail</span><span lang="en">Copy email</span></button>
             <a class="btn btn--ghost" href="https://www.linkedin.com/in/gabriel-yamamoto-068552252" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</a>
             <a class="btn btn--ghost" href="https://github.com/Yamakasuki" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>GitHub</a>
             <a class="btn btn--ghost" href="http://lattes.cnpq.br/6953741854576468" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg>Lattes</a>
@@ -893,5 +896,13 @@
       <a href="#inicio"><span lang="pt-BR">Voltar ao topo ↑</span><span lang="en">Back to top ↑</span></a>
     </div>
   </footer>
+
+  <!-- Aviso de "e-mail copiado" (lido também por leitores de tela). -->
+  <div class="toast" role="status">
+    <svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>
+    <span class="toast__texto"></span>
+  </div>
+  <template id="msg-copiado"><span lang="pt-BR">E-mail copiado: gabriel.yamamoto505@gmail.com</span><span lang="en">Email copied: gabriel.yamamoto505@gmail.com</span></template>
+  <template id="msg-falhou"><span lang="pt-BR">Não deu para copiar. O e-mail é gabriel.yamamoto505@gmail.com</span><span lang="en">Couldn't copy. The email is gabriel.yamamoto505@gmail.com</span></template>
 </body>
 </html>

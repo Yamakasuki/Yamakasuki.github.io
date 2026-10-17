@@ -210,6 +210,12 @@ body:has(.menu:popover-open) .secao .icon { rotate: 180deg; }
 .btn--primary:hover { background: #f0254f; box-shadow: 0 16px 38px -10px rgba(225, 29, 72, 0.95); }
 .btn--ghost { border-color: var(--line-strong); background: rgba(255, 255, 255, 0.03); color: var(--text); }
 .btn--ghost:hover { border-color: rgba(255, 77, 94, 0.55); background: rgba(255, 255, 255, 0.07); }
+.btn--icon { width: 50px; padding: 0; }
+/* Botões de copiar: o ícone vira um "ok" verde por um instante depois de copiar. */
+.icone-ok { display: none; }
+.copiado { border-color: rgba(61, 220, 132, 0.55); }
+.copiado .icone-copiar { display: none; }
+.copiado .icone-ok { display: block; color: var(--ok); }
 .socials { list-style: none; display: flex; gap: .55rem; margin-top: 1.35rem; }
 .socials a {
   display: grid; place-items: center; width: 48px; height: 48px;
@@ -597,6 +603,36 @@ code { padding: .1rem .35rem; border-radius: 6px; background: rgba(255, 255, 255
 .reveal .indice > li:nth-child(3) { transition-delay: 180ms; }
 .reveal .indice > li:nth-child(4) { transition-delay: 270ms; }
 
+/* Aviso flutuante ("e-mail copiado"). Fica sempre na árvore de acessibilidade
+   (só a opacidade muda) para o leitor de tela anunciar o texto. */
+.toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 70;
+  display: flex; align-items: center; gap: .6rem; width: max-content; max-width: calc(100vw - 32px);
+  padding: .85rem 1.15rem; border: 1px solid rgba(61, 220, 132, 0.35); border-radius: 14px;
+  background: rgba(20, 20, 29, 0.97); box-shadow: 0 20px 40px -16px rgba(0, 0, 0, 0.9);
+  font-size: .95rem; overflow-wrap: anywhere; pointer-events: none;
+  transform: translateX(-50%); opacity: 0; transition: opacity .2s ease;
+}
+.toast.mostra { opacity: 1; }
+.toast .icon { color: var(--ok); }
+.toast--erro { border-color: rgba(255, 138, 76, 0.45); }
+.toast--erro .icon { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .toast { transform: translate(-50%, 12px); transition: opacity .2s ease, transform .25s ease; }
+  .toast.mostra { transform: translate(-50%, 0); }
+}
+
+/* Luz que segue o cursor dentro dos cartões (só com mouse). */
+@media (hover: hover) and (pointer: fine) {
+  .stat, .proj, .front, .cert, .skill { position: relative; isolation: isolate; }
+  .stat::after, .proj::after, .front::after, .cert::after, .skill::after {
+    content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 77, 94, 0.1), transparent 45%);
+    opacity: 0; transition: opacity .3s ease;
+  }
+  .stat:hover::after, .proj:hover::after, .front:hover::after, .cert:hover::after, .skill:hover::after { opacity: 1; }
+}
+
 /* ---------- Rodapé ---------- */
 .footer { border-top: 1px solid var(--line); padding-block: 28px; color: var(--muted); font-size: .9rem; }
 .footer__inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem; }
@@ -625,7 +661,7 @@ code { padding: .1rem .35rem; border-radius: 6px; background: rgba(255, 255, 255
   .brand__name { display: none; }
   .lang button { min-width: 42px; padding: 0 .75rem; }
   .status { font-size: .8rem; }
-  .hero .cta .btn { flex: 1 1 auto; }
+  .hero .cta .btn:not(.btn--icon) { flex: 1 1 auto; }
   .node { font-size: .7rem; padding: .32rem .58rem; gap: .35rem; }
   .node::before { width: 5px; height: 5px; }
   .stat { padding: 1.1rem 1rem; }

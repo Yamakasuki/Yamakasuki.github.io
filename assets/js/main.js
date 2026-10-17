@@ -51,8 +51,13 @@ function trocarIdioma(lang) {
   moverIndicador(); // os nomes do menu mudam de largura
 }
 
+// Com a API de transições de visualização, um idioma se dissolve no outro.
 for (const b of document.querySelectorAll("[data-set-lang]")) {
-  b.addEventListener("click", () => trocarIdioma(b.dataset.setLang));
+  b.addEventListener("click", () => {
+    const trocar = () => trocarIdioma(b.dataset.setLang);
+    if (document.startViewTransition && b.dataset.setLang !== root.dataset.lang) document.startViewTransition(trocar);
+    else trocar();
+  });
 }
 definirIdioma(root.dataset.lang === "en" ? "en" : "pt", false);
 
@@ -215,4 +220,54 @@ if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: re
     for (const e of entradas) e.target.classList.toggle("vivo", e.isIntersecting);
   }, { threshold: 0.3 });
   for (const d of document.querySelectorAll(".flow, .pipeline")) vivo.observe(d);
+}
+
+// Copiar e-mail: em muitos computadores de empresa o mailto: não abre nada, então
+// o botão copia o endereço e confirma com um aviso.
+const aviso = document.querySelector(".toast");
+const avisoTexto = aviso.querySelector(".toast__texto");
+let avisoTempo;
+function avisar(modelo, ok) {
+  avisoTexto.replaceChildren(document.getElementById(modelo).content.cloneNode(true));
+  aviso.classList.toggle("toast--erro", !ok);
+  aviso.classList.add("mostra");
+  clearTimeout(avisoTempo);
+  avisoTempo = setTimeout(() => aviso.classList.remove("mostra"), 3200);
+}
+async function copiar(texto) {
+  try { await navigator.clipboard.writeText(texto); return true; } catch (e) { /* tenta o jeito antigo */ }
+  const campo = Object.assign(document.createElement("textarea"), { value: texto, readOnly: true });
+  campo.style.cssText = "position:fixed;top:0;opacity:0";
+  document.body.append(campo);
+  campo.select();
+  let ok = false;
+  try { ok = document.execCommand("copy"); } catch (e) { /* sem área de transferência */ }
+  campo.remove();
+  return ok;
+}
+for (const botao of document.querySelectorAll("[data-copiar]")) {
+  botao.addEventListener("click", async () => {
+    const ok = await copiar(botao.dataset.copiar);
+    avisar(ok ? "msg-copiado" : "msg-falhou", ok);
+    if (!ok) return;
+    botao.classList.add("copiado");
+    setTimeout(() => botao.classList.remove("copiado"), 1800);
+  });
+}
+
+// Luz que segue o cursor dentro dos cartões (só com mouse).
+if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  let cartao = null, x = 0, y = 0, agendado = false;
+  const mover = () => {
+    agendado = false;
+    if (!cartao) return;
+    const r = cartao.getBoundingClientRect();
+    cartao.style.setProperty("--mx", x - r.left + "px");
+    cartao.style.setProperty("--my", y - r.top + "px");
+  };
+  document.addEventListener("pointermove", (e) => {
+    cartao = e.target.closest(".stat, .proj, .front, .cert, .skill");
+    x = e.clientX; y = e.clientY;
+    if (cartao && !agendado) { agendado = true; requestAnimationFrame(mover); }
+  }, { passive: true });
 }
